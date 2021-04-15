@@ -7,14 +7,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox layoutX="69.0" layoutY="47.0" prefHeight="164.0" prefWidth="137.0">
+      <VBox layoutX="69.0" layoutY="47.0" prefHeight="102.0" prefWidth="138.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" wrappingWidth="110.13671875">
                <VBox.margin>
-                  <Insets />
+                  <Insets bottom="1.0" top="1.0" />
                </VBox.margin>
             </Text>
             <TextField prefHeight="26.0" prefWidth="78.0">
@@ -22,17 +21,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Apellido" wrappingWidth="110.13671875">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Text>
-            <TextField>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </TextField>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección" wrappingWidth="110.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Autores" wrappingWidth="110.13671875">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -44,11 +33,13 @@
             </TextField>
          </children>
       </VBox>
-      <VBox layoutX="239.0" layoutY="47.0" prefHeight="164.0" prefWidth="138.0">
+      <Button layoutX="100.0" layoutY="226.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="74.0" text="Guardar" />
+      <Button layoutX="271.0" layoutY="226.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="74.0" text="Cancelar" />
+      <VBox layoutX="214.0" layoutY="46.0" prefHeight="102.0" prefWidth="138.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DNI" wrappingWidth="110.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Editorial" wrappingWidth="110.13671875">
                <VBox.margin>
-                  <Insets />
+                  <Insets bottom="1.0" top="1.0" />
                </VBox.margin>
             </Text>
             <TextField prefHeight="26.0" prefWidth="78.0">
@@ -56,7 +47,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono" wrappingWidth="110.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edición" wrappingWidth="110.13671875">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -66,15 +57,9 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="110.13671875" />
-            <TextField>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </TextField>
          </children>
       </VBox>
-      <Button layoutX="100.0" layoutY="226.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="74.0" text="Button" />
-      <Button layoutX="271.0" layoutY="226.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="74.0" text="Button" />
+      <Text layoutX="194.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" />
+      <TextField layoutX="132.0" layoutY="176.0" />
    </children>
 </AnchorPane>

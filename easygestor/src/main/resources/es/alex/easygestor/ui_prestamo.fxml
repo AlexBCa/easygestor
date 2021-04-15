@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text layoutX="244.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestor de prestamos" />
@@ -17,7 +16,7 @@
       <TextField fx:id="in_n_socio" layoutX="106.0" layoutY="132.0" />
       <Text fx:id="out_titulo" layoutX="377.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mostrar titulo libro" />
       <Text fx:id="out_nombre" layoutX="377.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mostrar nombre socio" />
-      <TableView fx:id="tabla_prestamos" layoutX="52.0" layoutY="176.0" prefHeight="167.0" prefWidth="493.0">
+      <TableView fx:id="tabla_prestamos" layoutX="52.0" layoutY="204.0" prefHeight="139.0" prefWidth="494.0">
         <columns>
           <TableColumn prefWidth="75.0" text="id_prestamo" />
           <TableColumn prefWidth="131.20001220703125" text="nombre_socio" />
@@ -25,5 +24,6 @@
       </TableView>
       <Button fx:id="prestar" layoutX="130.0" layoutY="351.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Prestar" />
       <Button fx:id="Devolver" layoutX="354.0" layoutY="351.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Devolver" />
+      <TextField fx:id="in_n_socio1" layoutX="225.0" layoutY="174.0" />
    </children>
 </AnchorPane>
