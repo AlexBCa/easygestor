@@ -11,8 +11,8 @@
    <children>
       <TableView layoutX="39.0" layoutY="182.0" prefHeight="182.0" prefWidth="510.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="98.4000244140625" text="C2" />
+          <TableColumn prefWidth="75.0" text="Id" />
+          <TableColumn prefWidth="98.4000244140625" text="Titulo" />
         </columns>
       </TableView>
       <Text layoutX="200.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestión de libros" textAlignment="CENTER" wrappingWidth="169.336669921875" />
