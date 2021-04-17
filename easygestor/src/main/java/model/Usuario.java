@@ -12,8 +12,8 @@ public class Usuario implements Serializable{
 	private int Nsocio;
 	private String dni;
 	private String nombre;
-	private String apellido;
-	private String telefono;
+	private String apellidos;
+	private int telefono;
 	private String email;
 	private String direccion;
 	
@@ -23,13 +23,13 @@ public class Usuario implements Serializable{
 	
 	
 	
-	public Usuario(int nsocio, String dni, String nombre, String apellido, String telefono, String email,
+	public Usuario(int nsocio, String dni, String nombre, String apellidos, int telefono, String email,
 			String direccion) {
 		super();
 		Nsocio = nsocio;
 		this.dni = dni;
 		this.nombre = nombre;
-		this.apellido = apellido;
+		this.apellidos = apellidos;
 		this.telefono = telefono;
 		this.email = email;
 		this.direccion = direccion;
@@ -55,16 +55,16 @@ public class Usuario implements Serializable{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getApellido() {
-		return apellido;
+	public String getApellidos() {
+		return apellidos;
 	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setApellidos(String apellido) {
+		this.apellidos = apellido;
 	}
-	public String getTelefono() {
+	public int getTelefono() {
 		return telefono;
 	}
-	public void setTelefono(String telefono) {
+	public void setTelefono(int telefono) {
 		this.telefono = telefono;
 	}
 	public String getEmail() {
