@@ -11,6 +11,12 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * Esta clase controla los eventos lanzados al pulsar botones en la interfaz.
+ * @author Alex
+ *
+ */
+
 public class PrimaryController implements Initializable {
 	
     @FXML
@@ -26,7 +32,10 @@ public class PrimaryController implements Initializable {
     	
 
     }
-    
+    /**
+     * Metodo para cargar las distintas pantallas.
+     * @param ui. Este parametro permitira escoger las distintas interfaces.
+     */
     private void loadUI(String ui) {
     	Parent root = null;
     	try {
@@ -38,6 +47,9 @@ public class PrimaryController implements Initializable {
     	panelPrincipal.setCenter(root);
     }
 
+    /**
+     * Este metodo se ejecuta al iniciar la interfaz. 
+     */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
