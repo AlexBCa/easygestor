@@ -12,6 +12,8 @@
         <property name="connection.password"></property>    
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>   
        
-        <mapping class="model.Usuario"/>  
+        <mapping class="model.Usuario"/>
+        <mapping class="model.Libro"/>  
+        <mapping class="model.Prestamo"/>  
     </session-factory>  
 </hibernate-configuration>  
