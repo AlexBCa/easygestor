@@ -17,7 +17,6 @@ public class Libro implements Serializable {
 	private int id_libro;
 	@Id
 	@Column(name="isbn")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int isbn;
 	private String titulo;
 	private String autores;

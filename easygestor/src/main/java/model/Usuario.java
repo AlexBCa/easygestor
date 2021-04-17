@@ -9,7 +9,6 @@ public class Usuario implements Serializable{
 	
 	@Id
 	@Column(name="Nsocio")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int Nsocio;
 	private String dni;
 	private String nombre;
