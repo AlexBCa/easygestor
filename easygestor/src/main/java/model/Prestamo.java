@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,17 +20,29 @@ public class Prestamo implements Serializable{
 	private int id_prestamo;
 	private int Nsocio;
 	private int isbn;
+	private Date fecha_prestamo;
+	private Date fecha_limite_prestamo;
 	
 	public Prestamo() {
 		
 	}
 
-	public Prestamo(int id_prestamo, int nsocio, int isbn) {
+	
+
+	public Prestamo(int id_prestamo, int nsocio, int isbn, Date fecha_prestamo, Date fecha_limite_prestamo) {
 		super();
 		this.id_prestamo = id_prestamo;
 		Nsocio = nsocio;
 		this.isbn = isbn;
+		this.fecha_prestamo = fecha_prestamo;
+		this.fecha_limite_prestamo = fecha_limite_prestamo;
 	}
+
+	
+
+
+	
+
 
 	public int getId_prestamo() {
 		return id_prestamo;
@@ -55,6 +68,27 @@ public class Prestamo implements Serializable{
 		this.isbn = isbn;
 	}
 	
-	
+	public Date getFecha_prestamo() {
+		return fecha_prestamo;
+	}
+
+
+
+	public void setFecha_prestamo(Date fecha_prestamo) {
+		this.fecha_prestamo = fecha_prestamo;
+	}
+
+
+
+	public Date getFecha_limite_prestamo() {
+		return fecha_limite_prestamo;
+	}
+
+
+
+	public void setFecha_limite_prestamo(Date fecha_limite_prestamo) {
+		this.fecha_limite_prestamo = fecha_limite_prestamo;
+	}
+
 
 }
