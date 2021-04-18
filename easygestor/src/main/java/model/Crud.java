@@ -2,7 +2,7 @@ package model;
 
 import model.Usuario;
 
-import java.io.IOException;
+
 import java.util.List;
 
 import org.hibernate.Session;
@@ -171,6 +171,10 @@ public class Crud {
     	
     }
  
+    /**
+     * Borra un registro en la base de datos.
+     * @param obj. El objecto que queremos borrar.
+     */
     public void delete(Object obj) {
     	Session session = null;
     	
@@ -196,6 +200,10 @@ public class Crud {
     	
     }
 
+    /**
+     * Devuelve todo los usuarios en la base de datos.
+     * @return List<usurio> que contiene lo usuarios.
+     */
     public List<Usuario> findAllUsuarios() {
     	Session session = null;
     	List<Usuario>users = null;
@@ -215,6 +223,10 @@ public class Crud {
     	}
         return users;     
     }
+    /**
+     * Devuelve todo los libros en la base de datos.
+     * @return Devuelve un List<Libro> que contiene lo libros.
+     */
     
     public List<Libro> findAllLibros() {
     	
@@ -237,7 +249,10 @@ public class Crud {
         
         return libros;     
     }
-    
+    /**
+     * Obtine todo los prestamos de la base de datos.
+     * @return Devuelve un List<Prestamo> que contiene lo prestamos.
+     */
     public List<Prestamo> findAllPrestamos() {
     	Session session = null;
     	List<Prestamo>prestamos = null;
@@ -258,6 +273,8 @@ public class Crud {
         
         return prestamos;     
     }
+    
+    
     
     
 
