@@ -41,7 +41,7 @@ public class HibernateUtil {
 	    /**
 	     * Destruye el objecto con la configuración cargada.
 	     */
-	    public static void shutdown() {
+	    public static void destruir() {
 	        if (registry != null) {
 	            StandardServiceRegistryBuilder.destroy(registry);
 	        }
