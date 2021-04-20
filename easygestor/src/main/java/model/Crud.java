@@ -22,9 +22,10 @@ public class Crud {
 	/**
 	 * Inicia y carga una session con hiberante
 	 */
-    public void setup() {
+    public SessionFactory setup() {
     	HibernateUtil hu = new HibernateUtil();
     	sessionFactory = hu.getSessionFactory();
+    	return sessionFactory;
     }
     
     /**
@@ -39,14 +40,15 @@ public class Crud {
      * @param obj. Se envia un objecto que representa una tabla.
      * @throws ConstraintViolationException
      */
-    public void create(Object obj){
+    public int create(Object obj){
+    	int id = 0;
     	Session session = null;
     	
     	try {
     		session = sessionFactory.openSession();
     		session.beginTransaction();
             
-            session.save(obj);
+            id = (Integer) session.save(obj);
             
             session.getTransaction().commit();
 
@@ -60,6 +62,7 @@ public class Crud {
     			session.close();
     		}
     	}
+    	return id;
     	
     }
  
