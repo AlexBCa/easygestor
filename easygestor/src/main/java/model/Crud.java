@@ -5,9 +5,16 @@ import model.Usuario;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.query.Query;
 
 /**
  * Esta clase gestiona toda las llamadas a la base de datos.
@@ -277,8 +284,110 @@ public class Crud {
         return prestamos;     
     }
     
+    /**
+     * Esta función busca los usuarios que tenga el apellido pasado como parametro en la base de datos.
+     * @param apellido. Un String que contenga parte de los apellidos.
+     * @return ArrayList<Usuario>. Objeto que contiene los objetos Usuarios. 
+     */
+    public List<Usuario> searchAllUsuarios(String apellido){
+    	Session session = null;
+    	List<Usuario>usuarios = null;
+    	try {
+    		session = sessionFactory.openSession();
+        	Query<Usuario> qy = session.createQuery("SELECT a FROM Usuario a WHERE apellidos LIKE :palabra", Usuario.class);
+        	qy.setParameter("palabra", "%" +apellido+ "%");
+        	
+        	usuarios = qy.getResultList();
+        	
+
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	finally {
+    		if(session != null) {
+    			session.close();
+    		}
+    	}
+    	
+    	return usuarios;
+    }
     
     
+    /**
+     * Esta función busca los libros que tenga el titulo pasado como parametro en la base de datos.
+     * @param apellido. Un String que contenga parte del titulo.
+     * @return ArrayList<Libro>. Lista que contiene los objetos libro. 
+     */
+    public List<Libro> searchAllLibros(String titulo){
+    	Session session = null;
+    	List<Libro>libros = null;
+    	try {
+    		session = sessionFactory.openSession();
+        	Query<Libro> qy = session.createQuery("SELECT a FROM Libro a WHERE titulo LIKE :palabra", Libro.class);
+        	qy.setParameter("palabra", "%" +titulo+ "%");
+        	
+        	libros = qy.getResultList();
+        	
+
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	finally {
+    		if(session != null) {
+    			session.close();
+    		}
+    	}
+    	
+    	return libros;
+    }
+    
+    
+    /**
+     * Esta función busca los libros que tenga el titulo pasado como parametro en la base de datos.
+     * @param apellido. Un String que contenga parte del titulo.
+     * @return ArrayList<Libro>. Lista que contiene los objetos libro. 
+     */
+    public List<Prestamo> searchAllPrestamos(String Nsocio){
+    	Session session = null;
+    	List<Prestamo>prestamos = null;
+    	try {
+    		session = sessionFactory.openSession();
+        	//Query<Prestamo> qy = session.createQuery("SELECT a FROM Prestamo a WHERE Nsocio LIKE :palabra", Prestamo.class);
+        	//.setParameter("palabra", "%" +Nsocio+ "%");
+        	
+        	//prestamos = qy.getResultList();
+        	/*
+        	
+        	CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        	CriteriaQuery<Prestamo> cr = builder.createQuery( Prestamo.class );
+        	Root<Prestamo> root = cr.from( Prestamo.class );
+        	cr.select(root);
+        	cr.where(builder.like(root.get("Nsocio"), "2"));
+        	
+        	prestamos = session.createQuery(cr).getResultList();
+        	
+        	*/
+        	
+        	Criteria cats = session.createCriteria(Prestamo.class);
+        	cats.add(Restrictions.sqlRestriction("Nsocio LIKE '%"+Nsocio+"%'"));
+        	prestamos = cats.list();
+        	
+        	
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	finally {
+    		if(session != null) {
+    			session.close();
+    		}
+    	}
+    	
+    	return prestamos;
+    }
     
 
 }
