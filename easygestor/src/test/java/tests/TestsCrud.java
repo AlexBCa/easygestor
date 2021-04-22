@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import model.Crud;
+import model.Libro;
+import model.Prestamo;
 import model.Usuario;
 
 /**
@@ -91,6 +93,37 @@ class TestsCrud{
 		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) c.findAllUsuarios();
 		
 		assertNotNull(usuarios);
+	}
+	
+	@Test
+	void testsearchAllUsuarios() {
+		Crud c = new Crud();
+		SessionFactory s =c.setup();
+		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) c.searchAllUsuarios("j");
+		
+		assertNotNull(usuarios);
+		
+		
+	}
+	
+	@Test
+	void testsearchAllLibros() {
+		Crud c = new Crud();
+		SessionFactory s =c.setup();
+		ArrayList<Libro> libros = (ArrayList<Libro>) c.searchAllLibros("gen");
+		assertNotNull(libros);
+		
+		
+	}
+	
+	@Test
+	void testsearchAllPrestamos() {
+		Crud c = new Crud();
+		SessionFactory s =c.setup();
+		ArrayList<Prestamo> prestamos = (ArrayList<Prestamo>) c.searchAllPrestamos("254");
+		assertNotNull(prestamos);
+		
+		
 	}
 	
 	@AfterClass
