@@ -16,7 +16,7 @@
                   <Insets />
                </VBox.margin>
             </Text>
-            <TextField prefHeight="26.0" prefWidth="78.0">
+            <TextField fx:id="textUser" prefHeight="26.0" prefWidth="78.0">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -26,7 +26,7 @@
                   <Insets />
                </VBox.margin>
             </Text>
-            <TextField>
+            <TextField fx:id="textAp">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -36,7 +36,7 @@
                   <Insets />
                </VBox.margin>
             </Text>
-            <TextField>
+            <TextField fx:id="textDir">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -50,7 +50,7 @@
                   <Insets />
                </VBox.margin>
             </Text>
-            <TextField prefHeight="26.0" prefWidth="78.0">
+            <TextField fx:id="textDni" prefHeight="26.0" prefWidth="78.0">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -60,20 +60,20 @@
                   <Insets />
                </VBox.margin>
             </Text>
-            <TextField>
+            <TextField fx:id="textTele">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="110.13671875" />
-            <TextField>
+            <TextField fx:id="textEmail">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
          </children>
       </VBox>
-      <Button layoutX="100.0" layoutY="226.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="74.0" text="Guardar" />
-      <Button layoutX="271.0" layoutY="226.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="74.0" text="Cancelar" />
+      <Button fx:id="botonSave" layoutX="100.0" layoutY="226.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="74.0" text="Guardar" />
+      <Button fx:id="botonExit" layoutX="271.0" layoutY="226.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="74.0" text="Cancelar" />
    </children>
 </AnchorPane>
