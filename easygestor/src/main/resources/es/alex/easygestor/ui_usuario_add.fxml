@@ -16,7 +16,7 @@
                   <Insets />
                </VBox.margin>
             </Text>
-            <TextField fx:id="textUser" prefHeight="26.0" prefWidth="78.0">
+            <TextField fx:id="textName" prefHeight="26.0" prefWidth="78.0">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
