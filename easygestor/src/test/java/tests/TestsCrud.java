@@ -24,7 +24,7 @@ import model.Usuario;
 class TestsCrud{
 	
 	@BeforeClass
-	void testCreate() {
+	void testCreate() throws Exception {
 		Crud c = new Crud();
 		c.setup();
 		
@@ -59,7 +59,7 @@ class TestsCrud{
 	}
 	
 	@Test
-	void testUpdate() {
+	void testUpdate() throws Exception {
 		Crud c = new Crud();
 		SessionFactory s =c.setup();
 		
