@@ -171,27 +171,20 @@ public class Crud {
      * Borra un registro en la base de datos.
      * @param obj. El objecto que queremos borrar.
      */
-    public void delete(Object obj) {
+    public void delete(Object obj) throws Exception{
     	Session session = null;
     	
-    	try {
-    		session = sessionFactory.openSession();
-        	session.beginTransaction();
+
+    	session = sessionFactory.openSession();
+        session.beginTransaction();
         	 
-        	session.delete(obj);
+        session.delete(obj);
         	 
-        	session.getTransaction().commit();
-    	}
-    	catch(Exception e) {
-    		if(session != null) {
-    		}
-    		e.printStackTrace();
-    	}
-    	finally{
-    		if(session != null) {
-    			session.close();
-    		}
-    	}
+        session.getTransaction().commit();
+
+    	session.close();
+    		
+    	
     	
     	
     }
