@@ -153,7 +153,7 @@ public class AddUsuarioController implements Initializable{
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				
+				alerta("Ocurrio un error al editar el usuario",AlertType.ERROR);
 			}
 			
 		}
@@ -179,7 +179,7 @@ public class AddUsuarioController implements Initializable{
 		}
 		catch(NumberFormatException e) {
 			e.printStackTrace();
-			
+			alerta("Tipo de dato erroneo",AlertType.ERROR);
 		}
 		
 		
