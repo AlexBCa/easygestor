@@ -101,7 +101,9 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		
 	}
 	
-	
+	/**
+	 * Carga los usuarios en la base de datos y los inserta en la tabla.
+	 */
 	public void cargarTabla() {
 			
 			tabla_user.getItems().clear();
@@ -122,13 +124,21 @@ public class UsuarioController extends PanelPadre implements Initializable {
 			
 		}
 	
-	
+	/**
+	 * Lanza una alerta al usuario.
+	 * @param nombre. Texto de la alerta.
+	 * @param alert. Tipo de la alerta.
+	 */
 	public void alerta(String nombre, Alert.AlertType alert) {
-		Alert alerta = new Alert(AlertType.ERROR, nombre);
+		Alert alerta = new Alert(alert, nombre);
 		
 		alerta.showAndWait();
 	}
 	
+	/**
+	 * Devuelve el objeto usuairo selecionado en la lista.
+	 * @return
+	 */
 	public Object obtenerObjetoFoco() {
 		ObservableList<?> listaUser;
 		
@@ -140,6 +150,11 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		}
 		return listaUser.get(0);
 	}
+	
+	/**
+	 * Lanza una nueva ventana en la que se puede introducir los campos de usuario.
+	 * @param event
+	 */
 	
 	public void botonAdd(ActionEvent event) {
 		try {
@@ -167,6 +182,10 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		
 	}
 	
+	/**
+	 * Lanza una nueva ventana con los atributos del objeto selecionado.
+	 * @param resources
+	 */
 	public void botonEdit(ResourceBundle resources) {
 		edit_user.setOnMouseClicked(event -> {
 			try {
@@ -194,9 +213,17 @@ public class UsuarioController extends PanelPadre implements Initializable {
 	
 	public void botonDel(ActionEvent event) {
 		
+		
 		Usuario user = (Usuario) obtenerObjetoFoco();
 		if(user != null) {
-			manager.delete(user);
+			try {
+				manager.delete(user);
+				alerta("¿Seguro que quieres borrar el usuario?", AlertType.CONFIRMATION);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				alerta("Error al borrar usuario.", AlertType.ERROR);
+			}
 		}
 		
 		cargarTabla();
@@ -205,7 +232,9 @@ public class UsuarioController extends PanelPadre implements Initializable {
 	}
 	
 	// Buscar
-	
+	/**
+	 * Detecta cada cambio en el TextField y lanza un evento.
+	 */
 	public void cambios() {
 		
 		buscar_user.textProperty().addListener(new ChangeListener<String>() {
@@ -221,6 +250,10 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		
 	}
 	
+	/**
+	 * Actualiza la tabla con los usuarios que coincidan con el texto.
+	 * @param apellido
+	 */
 	public void cargarTablaPersonalizada(String apellido) {
 		tabla_user.getItems().clear();
 		List<Usuario> usuarios = manager.searchAllUsuarios(apellido);
