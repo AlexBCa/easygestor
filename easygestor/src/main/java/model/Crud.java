@@ -47,28 +47,20 @@ public class Crud {
      * @param obj. Se envia un objecto que representa una tabla.
      * @throws ConstraintViolationException
      */
-    public int create(Object obj){
+    public int create(Object obj) throws Exception{
     	int id = 0;
     	Session session = null;
     	
-    	try {
     		session = sessionFactory.openSession();
     		session.beginTransaction();
             
             id = (Integer) session.save(obj);
             
             session.getTransaction().commit();
+            session.close();
 
     		
-    	}
-    	catch(Exception e) {
-    		e.printStackTrace();
-    	}
-    	finally{
-    		if(session != null) {
-    			session.close();
-    		}
-    	}
+    	
     	return id;
     	
     }
@@ -157,27 +149,21 @@ public class Crud {
      * Actualiza los datos del objecto pasado.
      * @param obj
      */
-    public void update(Object obj) {
+    public void update(Object obj) throws Exception{
     	
     	Session session = null;
     	
-    	try {
-    		session = sessionFactory.openSession();
-            session.beginTransaction();
+
+    	session = sessionFactory.openSession();
+        session.beginTransaction();
             
-            session.update(obj);
+        session.update(obj);
             
-            session.getTransaction().commit();
+        session.getTransaction().commit();
+        session.close();
+           
     		
-    	}
-    	catch(Exception e) {
-    		e.printStackTrace();
-    	}
-    	finally{
-    		if(session != null) {
-    			session.close();
-    		}
-    	}
+    	
     	
     }
  
