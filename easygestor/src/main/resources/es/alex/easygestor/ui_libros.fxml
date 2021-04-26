@@ -7,18 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.alex.easygestor.LibroController">
    <children>
-      <TableView layoutX="39.0" layoutY="182.0" prefHeight="182.0" prefWidth="510.0">
+      <TableView fx:id="tablaLibros" layoutX="39.0" layoutY="182.0" prefHeight="182.0" prefWidth="510.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Id" />
-          <TableColumn prefWidth="98.4000244140625" text="Titulo" />
+          <TableColumn fx:id="columIsbn" prefWidth="95.20001220703125" text="ISBN" />
+          <TableColumn fx:id="columTitulo" prefWidth="120.79998779296875" text="Titulo" />
+            <TableColumn fx:id="columAutor" prefWidth="111.20001220703125" text="Autor" />
+            <TableColumn fx:id="columEditorial" prefWidth="88.79998779296875" text="Editorial" />
+            <TableColumn fx:id="columDispo" prefWidth="95.20001220703125" text="Disponible" />
         </columns>
       </TableView>
       <Text layoutX="200.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestión de libros" textAlignment="CENTER" wrappingWidth="169.336669921875" />
-      <Button layoutX="118.0" layoutY="80.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="67.0" text="Añadir" />
-      <Button layoutX="251.0" layoutY="79.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="67.0" text="Editar" />
-      <Button layoutX="382.0" layoutY="79.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="67.0" text="Borrar" />
-      <TextField layoutX="210.0" layoutY="142.0" />
+      <Button fx:id="botonAdd" layoutX="118.0" layoutY="80.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="67.0" text="Añadir" />
+      <Button fx:id="botonEdit" layoutX="251.0" layoutY="79.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="67.0" text="Editar" />
+      <Button fx:id="botonDel" layoutX="382.0" layoutY="79.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="67.0" text="Borrar" />
+      <TextField fx:id="searchLibros" layoutX="210.0" layoutY="142.0" />
    </children>
 </AnchorPane>
