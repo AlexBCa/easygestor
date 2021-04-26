@@ -127,7 +127,7 @@ class TestsCrud{
 	}
 	
 	@AfterClass
-	void testDelete() {
+	void testDelete() throws Exception {
 		Crud c = new Crud();
 		Usuario u =c.readUsuario(9999);
 		
