@@ -10,6 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import model.Libro;
 import model.Usuario;
 
@@ -154,5 +156,15 @@ public class AddLibroController implements Initializable {
 		
 	}
 	
+	
+	/**
+	 * Cierra una ventana.
+	 */
+	public void close(ActionEvent event) {
+		Window ventana = botonExit.getScene().getWindow();
+		ventana.fireEvent(new WindowEvent(ventana, WindowEvent.WINDOW_CLOSE_REQUEST));
+	    // do what you have to do
+	    
+	}
 	
 }
