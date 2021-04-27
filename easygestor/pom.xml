@@ -48,6 +48,13 @@
 	    <scope>compile</scope>
 	    
 	</dependency>
+	<!-- Añade liberias para validar correo electronicos -->
+	<dependency>
+	    <groupId>commons-validator</groupId>
+	    <artifactId>commons-validator</artifactId>
+	    <version>1.7</version>
+	</dependency>
+	
 	
 	
 		
