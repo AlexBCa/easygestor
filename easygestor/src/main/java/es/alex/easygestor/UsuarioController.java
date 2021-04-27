@@ -74,6 +74,7 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		cargarTabla();
 		botonEdit(resources);
 		cambios();
+		detectSelect();
 		buscar_user.setPromptText("Buscar Apellidos");
 		
 		add_user.setOnAction(this::botonAdd);
@@ -84,18 +85,7 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		
 		
 		
-		tabla_user.getSelectionModel().selectedItemProperty().addListener(new javafx.beans.value.ChangeListener<Usuario>() {
-			@Override
-			public void changed(ObservableValue<? extends Usuario> observable, Usuario oldValue, Usuario newValue) {
-				if (tabla_user.getSelectionModel().getSelectedItem() != null) {
-					edit_user.setDisable(false);
-					del_user.setDisable(false);
-				} else {
-					edit_user.setDisable(true);
-					del_user.setDisable(true);
-				}
-			}
-		});
+		
 		
 	
 		
@@ -271,6 +261,25 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		//Añadimos los Usuarios a la tabla.
 		tabla_user.setItems(listaUsuarios);
 		
+	}
+	
+	/**
+	 * Detecta cuando se hace clic en uno de los elementos de la lista y lanza un evento que activa los botones edita y borrar.
+	 */
+	public void detectSelect() {
+		
+		tabla_user.getSelectionModel().selectedItemProperty().addListener(new javafx.beans.value.ChangeListener<Usuario>() {
+			@Override
+			public void changed(ObservableValue<? extends Usuario> observable, Usuario oldValue, Usuario newValue) {
+				if (tabla_user.getSelectionModel().getSelectedItem() != null) {
+					edit_user.setDisable(false);
+					del_user.setDisable(false);
+				} else {
+					edit_user.setDisable(true);
+					del_user.setDisable(true);
+				}
+			}
+		});
 	}
 	
 
