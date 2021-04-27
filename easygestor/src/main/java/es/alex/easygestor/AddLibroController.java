@@ -3,6 +3,7 @@ package es.alex.easygestor;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -36,6 +37,8 @@ public class AddLibroController implements Initializable {
     private TextField textIsbn;
     
     private Libro libro;
+    
+    private boolean modeEdit;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -90,5 +93,66 @@ public class AddLibroController implements Initializable {
 		
 		alerta.showAndWait();
 	}
+	
+	
+	/**
+	 * Comprueba si todo los campos han sido rellenados.
+	 * @return Valido. Es un boleano que devuelve true o false.
+	 */
+	public Boolean checkCampos() {
+		Boolean valido = false;
+	
+		try {
+			if(textTitulo.getText().isEmpty()|| textAutor.getText().isEmpty()|| textEditorial.getText().isEmpty()||
+					textEdicion.getText().isEmpty()|| textIsbn.getText().isEmpty()) {
+				
+				
+				valido = false;
+				throw new Exception();
+				
+			}else {
+				valido = true;
+				
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			alerta("Tiene que introducir todos los campos", AlertType.ERROR);
+		}
+		
+		
+		return valido;
+	}
 
+	
+	/**
+	 * Sirve para diferenciar si es una nueva entrada o una edición.
+	 */
+	public void getMode() {
+		
+		if(textTitulo.getText().isEmpty()) {
+			modeEdit= false;
+		}
+		else {
+			modeEdit= true;
+		}
+	}
+	
+	
+	/**
+	 * Comprueba si esta en modo editar o añadir y lanza los metodos correspondiente. 
+	 * @param event
+	 */
+	public void selectMode(ActionEvent event){
+		if(modeEdit) {
+			//saveEdit(event);
+		}
+		else {
+			//save(event);
+		}
+		
+	}
+	
+	
 }
