@@ -161,7 +161,7 @@ public class AddLibroController implements Initializable {
 	 */
 	public void selectMode(ActionEvent event){
 		if(modeEdit) {
-			//saveEdit(event);
+			saveEdit(event);
 		}
 		else {
 			save(event);
@@ -196,7 +196,7 @@ public class AddLibroController implements Initializable {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				alerta("Ocurrio un error al crear el usuario",AlertType.ERROR);
+				alerta("Ocurrio un error al crear el libro",AlertType.ERROR);
 			}
 					
 
@@ -205,5 +205,28 @@ public class AddLibroController implements Initializable {
 			close(event);
 			
 		}
+	}
+	
+	/**
+	 * Esta función actauliza un registro de la tabla.
+	 * @param event
+	 */
+	public void saveEdit(ActionEvent event) {
+		if(checkCampos()) {
+			Libro editLibro = getNewLibro();
+			
+			try {
+				System.out.println("Actualizando");
+				manageCrud.update(editLibro);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				alerta("Ocurrio un error al editar el libro",AlertType.ERROR);
+			}
+			
+			
+		}
+		close(event);
+		
 	}
 }

@@ -125,7 +125,7 @@ public class AddUsuarioController implements Initializable{
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				alerta("Ocurrio un error al crear el usuario",AlertType.ERROR);
+				alerta("Ocurrio un error al crear el libro",AlertType.ERROR);
 			}
 					
 
@@ -153,10 +153,11 @@ public class AddUsuarioController implements Initializable{
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				alerta("Ocurrio un error al editar el usuario",AlertType.ERROR);
+				alerta("Ocurrio un error al editar el libro",AlertType.ERROR);
 			}
 			
 		}
+		close(event);
 		
 	}
 	
