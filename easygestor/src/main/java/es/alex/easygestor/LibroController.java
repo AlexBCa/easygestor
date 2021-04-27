@@ -80,9 +80,12 @@ public class LibroController implements Initializable{
 		cargarTabla();
 		detectSelect();
 		cambios();
+		botonEdit(resources);
 		
 		botonAdd.setOnAction(this::abrirAdd);
 		botonDel.setOnAction(this::borrar);
+		
+		searchLibros.setPromptText("Buscar por título");
 	}
 	
 	
@@ -274,6 +277,36 @@ public class LibroController implements Initializable{
 			
 			
 		}
+	
+	
+	/**
+	 * Lanza una nueva ventana con los atributos del objeto selecionado.
+	 * @param resources
+	 */
+	public void botonEdit(ResourceBundle resources) {
+		botonEdit.setOnMouseClicked(event -> {
+			try {
+				// Cargamos la informacion de la ventana de edicion que abriremos
+				FXMLLoader loader = new FXMLLoader(App.class.getResource("ui_libro_add.fxml"), resources);
+				Stage stage = new Stage();
+				stage.setTitle("Editar libro");
+				Parent root = loader.load();
+				stage.setScene(new Scene(root));
+				// Añadimos la fila seleccionada al controlador para poder editarlo
+				((AddLibroController) loader.getController()).initData(tablaLibros.getSelectionModel().getSelectedItem());
+				stage.show();
+				// Evento que se lanzara al cerrar la ventana de edicion y actualizara los datos de la tabla
+				stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+					@Override
+					public void handle(WindowEvent event) {
+						cargarTabla();
+					}
+				});
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+	}
 	
 
 }
