@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import model.Crud;
 import model.Libro;
 import model.Usuario;
 
@@ -41,10 +42,20 @@ public class AddLibroController implements Initializable {
     private Libro libro;
     
     private boolean modeEdit;
+    
+    private Crud manageCrud;
+    
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		
+		manageCrud = new Crud();
+		manageCrud.setup();
+		
+		
+		botonSave.setOnAction(this::selectMode);
+		
 		
 	}
 
@@ -57,6 +68,7 @@ public class AddLibroController implements Initializable {
 		textEdicion.setText(libro.getEdicion());
 		textIsbn.setText(Integer.toString(libro.getIsbn()));
 		
+		getMode();
 		
 		
 	}
@@ -72,6 +84,7 @@ public class AddLibroController implements Initializable {
 			newLibro.setEditorial(textEditorial.getText());
 			newLibro.setEdicion(textEdicion.getText());
 			newLibro.setIsbn(Integer.parseInt(textIsbn.getText()));
+			newLibro.setDisponibilidad(true);
 
 			
 		}
@@ -151,7 +164,7 @@ public class AddLibroController implements Initializable {
 			//saveEdit(event);
 		}
 		else {
-			//save(event);
+			save(event);
 		}
 		
 	}
@@ -167,4 +180,30 @@ public class AddLibroController implements Initializable {
 	    
 	}
 	
+	/**
+	 * Guarda las nuevos datos y crea un registro.
+	 * @param event
+	 */
+	public void save(ActionEvent event) {
+		
+		if(checkCampos()) {
+			Libro newLibro = getNewLibro();
+			
+			
+
+			try {
+				manageCrud.create(newLibro);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				alerta("Ocurrio un error al crear el usuario",AlertType.ERROR);
+			}
+					
+
+			
+			
+			close(event);
+			
+		}
+	}
 }
