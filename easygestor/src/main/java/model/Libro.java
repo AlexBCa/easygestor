@@ -13,8 +13,8 @@ import javax.persistence.Table;
 @Table(name="Libro")
 public class Libro implements Serializable {
 	
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id_libro;
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//private int id_libro;
 	@Id
 	@Column(name="isbn")
 	private int isbn;
@@ -28,10 +28,10 @@ public class Libro implements Serializable {
 		
 	}
 
-	public Libro(int id_libro, int isbn, String titulo, String autores, String editorial, String edicion,
+	public Libro( int isbn, String titulo, String autores, String editorial, String edicion,
 			Boolean disponibilidad) {
 		super();
-		this.id_libro = id_libro;
+		
 		this.isbn = isbn;
 		this.titulo = titulo;
 		this.autores = autores;
@@ -40,13 +40,7 @@ public class Libro implements Serializable {
 		this.disponibilidad = disponibilidad;
 	}
 
-	public int getId_libro() {
-		return id_libro;
-	}
 
-	public void setId_libro(int id_libro) {
-		this.id_libro = id_libro;
-	}
 
 	public int getIsbn() {
 		return isbn;
