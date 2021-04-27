@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.alex.easygestor.AddLibroController">
    <children>
       <GridPane layoutX="59.0" layoutY="37.0" prefHeight="105.0" prefWidth="310.0">
         <columnConstraints>
@@ -23,12 +23,12 @@
             <RowConstraints maxHeight="67.5999740600586" minHeight="10.0" prefHeight="26.59999542236328" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="textName" prefHeight="26.0" prefWidth="78.0" GridPane.rowIndex="1">
+            <TextField fx:id="textTitulo" prefHeight="26.0" prefWidth="78.0" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" wrappingWidth="150.13671875" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Titulo" wrappingWidth="150.13671875" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Autores" wrappingWidth="110.13671875" GridPane.rowIndex="2" />
             <TextField fx:id="textAutor" GridPane.rowIndex="3">
                <GridPane.margin>
