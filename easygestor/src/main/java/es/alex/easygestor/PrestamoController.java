@@ -66,6 +66,10 @@ public class PrestamoController implements Initializable {
     
     public Crud manager;
     
+    public boolean usuarioValido;
+    
+    public boolean libroValido;
+    
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -79,6 +83,7 @@ public class PrestamoController implements Initializable {
 		cargarTabla();
 		detectSelect();
 		detectarEstrituraLibro(textIsbn);
+		detectarEstrituraUsuario(textNsocio);
 		
 	}
 	
@@ -159,6 +164,8 @@ public class PrestamoController implements Initializable {
 					if(lib != null && !(observable.getValue().isEmpty())) {
 						outTitulo.setText(lib.getTitulo());
 						System.out.println(observable.getValue());
+						// Valida el libro
+						libroValido = true;
 						
 					}else if (textIsbn.getText().length() > 0){
 						outTitulo.setText("Desconocido");
@@ -181,4 +188,68 @@ public class PrestamoController implements Initializable {
 		return libro;
 		
 	}
+	
+	public void detectarEstrituraUsuario(TextField cuadro) {
+			
+			cuadro.textProperty().addListener(new ChangeListener<String>() {
+	
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					System.out.println("Cambios");
+					Usuario user = null;
+					try {
+						if((textNsocio.getText().isEmpty())) {
+							
+							outNombre.setText("Muestra titulo libro");
+							
+						}
+						else {
+							user = buscarUsuario(Integer.parseInt(textNsocio.getText()));
+						}
+						
+						if(user != null && !(observable.getValue().isEmpty())) {
+							outNombre.setText(user.getNombre()+ " "+user.getApellidos());
+							System.out.println(observable.getValue());
+							// valida el usuario.
+							usuarioValido = true;
+							
+							
+						}else if (textNsocio.getText().length() > 0){
+							outNombre.setText("Desconocido");
+						}
+						
+					}
+					catch(NumberFormatException e) {
+						outNombre.setText("Desconocido");
+					}
+	
+				}
+				
+			});
+			
+		}
+		
+	public Usuario buscarUsuario(int Nsocio) {
+		Usuario user = new Usuario();
+		user = manager.readUsuario(Nsocio);
+		return user;
+		
+	}
+	
+	/**
+	 * Devuelve un true si los campos de usuario y libro son correctos. 
+	 * @return true o false.
+	 */
+	public boolean checkValidez() {
+		
+		if(usuarioValido && libroValido) {
+			
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 }
