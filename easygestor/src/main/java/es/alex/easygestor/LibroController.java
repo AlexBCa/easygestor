@@ -308,5 +308,7 @@ public class LibroController implements Initializable{
 		});
 	}
 	
+	
+	
 
 }
