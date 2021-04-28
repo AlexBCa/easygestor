@@ -15,6 +15,7 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import model.Crud;
 import model.Usuario;
+import org.apache.commons.validator.routines.EmailValidator;
 
 public class AddUsuarioController implements Initializable{
 	
@@ -234,6 +235,11 @@ public class AddUsuarioController implements Initializable{
 		ventana.fireEvent(new WindowEvent(ventana, WindowEvent.WINDOW_CLOSE_REQUEST));
 	    // do what you have to do
 	    
+	}
+	
+	public boolean validarEmail(String email) {
+		boolean valid = EmailValidator.getInstance().isValid(email);
+		return valid;
 	}
 	
 	
