@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import model.Crud;
+import model.Libro;
 import model.Prestamo;
 import model.Usuario;
 import model.Prestamo;
@@ -76,6 +78,7 @@ public class PrestamoController implements Initializable {
 		
 		cargarTabla();
 		detectSelect();
+		detectarEstrituraLibro(textIsbn);
 		
 	}
 	
@@ -133,5 +136,49 @@ public class PrestamoController implements Initializable {
 			}
 		});
 	}
+	
+	public void detectarEstrituraLibro(TextField cuadro) {
+		
+		cuadro.textProperty().addListener(new ChangeListener<String>() {
 
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				System.out.println("Cambios");
+				Libro lib = null;
+				try {
+					if((textIsbn.getText().isEmpty())) {
+						
+						outTitulo.setText("Muestra titulo libro");
+						
+					}
+					else {
+						lib = buscarLibro(Integer.parseInt(textIsbn.getText()));
+					}
+					
+					if(lib != null && !(observable.getValue().isEmpty())) {
+						outTitulo.setText(lib.getTitulo());
+						System.out.println(observable.getValue());
+						
+					}else if (textIsbn.getText().length() > 0){
+						outTitulo.setText("Desconocido");
+					}
+					
+				}
+				catch(NumberFormatException e) {
+					outTitulo.setText("Desconocido");
+				}
+
+			}
+			
+		});
+		
+	}
+	
+	public Libro buscarLibro(int isbn) {
+		Libro libro = new Libro();
+		libro = manager.readLibro(isbn);
+		return libro;
+		
+	}
 }
