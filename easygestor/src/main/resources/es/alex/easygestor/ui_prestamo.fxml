@@ -14,8 +14,8 @@
       <TextField fx:id="textIsbn" layoutX="106.0" layoutY="77.0" />
       <Text layoutX="106.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número de socio" />
       <TextField fx:id="textNsocio" layoutX="106.0" layoutY="132.0" />
-      <Text fx:id="out_titulo" layoutX="377.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mostrar titulo libro" />
-      <Text fx:id="out_nombre" layoutX="377.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mostrar nombre socio" />
+      <Text fx:id="outTitulo" layoutX="377.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mostrar titulo libro" />
+      <Text fx:id="outNombre" layoutX="377.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mostrar nombre socio" />
       <TableView fx:id="tablaPrestamos" layoutX="52.0" layoutY="204.0" prefHeight="139.0" prefWidth="494.0">
         <columns>
           <TableColumn fx:id="columId" prefWidth="51.20001220703125" text="Id" />
