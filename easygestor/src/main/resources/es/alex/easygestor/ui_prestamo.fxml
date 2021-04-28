@@ -11,19 +11,22 @@
    <children>
       <Text layoutX="244.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestor de prestamos" />
       <Text layoutX="106.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" />
-      <TextField fx:id="in_isbn" layoutX="106.0" layoutY="77.0" />
+      <TextField fx:id="textIsbn" layoutX="106.0" layoutY="77.0" />
       <Text layoutX="106.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número de socio" />
-      <TextField fx:id="in_n_socio" layoutX="106.0" layoutY="132.0" />
+      <TextField fx:id="textNsocio" layoutX="106.0" layoutY="132.0" />
       <Text fx:id="out_titulo" layoutX="377.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mostrar titulo libro" />
       <Text fx:id="out_nombre" layoutX="377.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mostrar nombre socio" />
-      <TableView fx:id="tabla_prestamos" layoutX="52.0" layoutY="204.0" prefHeight="139.0" prefWidth="494.0">
+      <TableView fx:id="tablaPrestamos" layoutX="52.0" layoutY="204.0" prefHeight="139.0" prefWidth="494.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="id_prestamo" />
-          <TableColumn prefWidth="131.20001220703125" text="nombre_socio" />
+          <TableColumn fx:id="columId" prefWidth="51.20001220703125" text="Id" />
+          <TableColumn fx:id="columNsocio" prefWidth="112.79998779296875" text="Numero de socio" />
+            <TableColumn fx:id="columIsbn" prefWidth="71.20001220703125" text="ISBN" />
+            <TableColumn fx:id="columFechaPrestamo" prefWidth="111.2000732421875" text="Fecha Prestamo" />
+            <TableColumn fx:id="columFechaEntrega" prefWidth="144.7999267578125" text="Fecha Entrega" />
         </columns>
       </TableView>
-      <Button fx:id="prestar" layoutX="130.0" layoutY="351.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Prestar" />
-      <Button fx:id="Devolver" layoutX="354.0" layoutY="351.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Devolver" />
-      <TextField fx:id="in_n_socio1" layoutX="225.0" layoutY="174.0" />
+      <Button fx:id="botonPrestar" layoutX="130.0" layoutY="351.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Prestar" />
+      <Button fx:id="botonDevolver" layoutX="354.0" layoutY="351.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Devolver" />
+      <TextField fx:id="searchNsocio" layoutX="225.0" layoutY="174.0" />
    </children>
 </AnchorPane>
