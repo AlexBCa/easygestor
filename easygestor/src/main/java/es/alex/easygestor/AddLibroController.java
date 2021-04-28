@@ -55,6 +55,7 @@ public class AddLibroController implements Initializable {
 		
 		
 		botonSave.setOnAction(this::selectMode);
+		botonExit.setOnAction(this::close);
 		
 		
 	}
