@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import model.Crud;
 import model.Prestamo;
+import model.Usuario;
 import model.Prestamo;
 
 public class PrestamoController implements Initializable {
@@ -28,10 +30,10 @@ public class PrestamoController implements Initializable {
     private TextField textNsocio;
 
     @FXML
-    private Text out_titulo;
+    private Text outTitulo;
 
     @FXML
-    private Text out_nombre;
+    private Text outNombre;
 
     @FXML
     private TableView<Prestamo> tablaPrestamos;
@@ -73,6 +75,7 @@ public class PrestamoController implements Initializable {
 		manager.setup();
 		
 		cargarTabla();
+		detectSelect();
 		
 	}
 	
@@ -110,6 +113,25 @@ public class PrestamoController implements Initializable {
 		Alert alerta = new Alert(alert, nombre);
 		
 		alerta.showAndWait();
+	}
+	
+	/**
+	 * Detecta cuando se hace clic en uno de los elementos de la lista y lanza un evento que activa los botones edita y borrar.
+	 */
+	public void detectSelect() {
+		
+		tablaPrestamos.getSelectionModel().selectedItemProperty().addListener(new javafx.beans.value.ChangeListener<Prestamo>() {
+			@Override
+			public void changed(ObservableValue<? extends Prestamo> observable, Prestamo oldValue, Prestamo newValue) {
+				if (tablaPrestamos.getSelectionModel().getSelectedItem() != null) {
+					botonPrestar.setDisable(false);
+					botonDevolver.setDisable(false);
+				} else {
+					botonPrestar.setDisable(true);
+					botonDevolver.setDisable(true);
+				}
+			}
+		});
 	}
 
 }
