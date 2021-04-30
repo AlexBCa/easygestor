@@ -368,5 +368,23 @@ public class Crud {
     	return prestamos;
     }
     
+    public long contarPrestamos(int nsocio) {
+    	Session session = null;
+    	
+
+    	session = sessionFactory.openSession();
+        session.beginTransaction();
+        String hql = "SELECT count(E.id_prestamo) FROM Prestamo E WHERE E.Nsocio = :usuario_nsocio";
+        Query qy = session.createQuery(hql);
+        qy.setParameter("usuario_nsocio", nsocio);
+        long count  = (long) qy.uniqueResult();
+            
+        session.getTransaction().commit();
+        session.close();
+        
+        return count;
+    	
+    }
+    
 
 }
