@@ -1,6 +1,7 @@
 package es.alex.easygestor;
 
 import java.net.URL;
+import java.sql.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -8,6 +9,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -15,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import model.Crud;
@@ -74,7 +77,7 @@ public class PrestamoController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		botonPrestar.setDisable(true);
+		
 		botonDevolver.setDisable(true);
 		
 		manager = new Crud();
@@ -84,6 +87,12 @@ public class PrestamoController implements Initializable {
 		detectSelect();
 		detectarEstrituraLibro(textIsbn);
 		detectarEstrituraUsuario(textNsocio);
+		
+		System.out.println(manager.contarPrestamos(1));
+		
+		
+		botonPrestar.setOnAction(this::prestar);
+		botonDevolver.setOnAction(this::borrar);
 		
 	}
 	
@@ -98,6 +107,7 @@ public class PrestamoController implements Initializable {
 			//Creamos un objeto Observable donde se guardarán todos los objetos usuarios.
 			ObservableList<Prestamo> listaPrestamos = FXCollections.observableArrayList(prestamos);
 			
+			//idea como añadir el titulo relacionado.
 			
 			//se envia a la celda el parametro a mostar
 			columId.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("id_prestamo"));
@@ -132,10 +142,10 @@ public class PrestamoController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends Prestamo> observable, Prestamo oldValue, Prestamo newValue) {
 				if (tablaPrestamos.getSelectionModel().getSelectedItem() != null) {
-					botonPrestar.setDisable(false);
+					
 					botonDevolver.setDisable(false);
 				} else {
-					botonPrestar.setDisable(true);
+					
 					botonDevolver.setDisable(true);
 				}
 			}
@@ -201,7 +211,7 @@ public class PrestamoController implements Initializable {
 					try {
 						if((textNsocio.getText().isEmpty())) {
 							
-							outNombre.setText("Muestra titulo libro");
+							outNombre.setText("Muestra nombre socio");
 							
 						}
 						else {
@@ -251,5 +261,132 @@ public class PrestamoController implements Initializable {
 			return false;
 		}
 	}
+	
+	public void prestar(ActionEvent event) {
+		
+		try {
+			
+			int isbn = Integer.parseInt(textIsbn.getText());
+			int Nsocio = Integer.parseInt(textNsocio.getText());
+			
+			if(checkValidez()&& checkDisponibilidad(isbn)&& !(maximoPrestAlcanzados(Nsocio))) {
+
+				
+				
+				long now = System.currentTimeMillis();
+		        Date dateNow= new Date(now);
+		        
+		        Date limite = new Date(now+1296000000);
+		       
+				Prestamo prestamo = new Prestamo();
+				prestamo.setIsbn(isbn);
+				prestamo.setNsocio(Nsocio);
+		        prestamo.setFecha_prestamo(dateNow);
+		        prestamo.setFecha_limite_prestamo(limite);
+		        
+		        // Cambiar la disponiblidad.
+		        Libro lb = buscarLibro(isbn);
+		        
+		        lb.setDisponibilidad(false);
+		        manager.create(prestamo);
+		        manager.update(lb);
+		       
+				cargarTabla();
+				
+				
+		        
+		        
+		        
+		        
+			}
+			else if(checkDisponibilidad(isbn) == false) {
+				alerta("El libro ya esta prestado", AlertType.ERROR);
+			}
+			else {
+	        	alerta("Debe introducir un Nsocio y ISBN validos", AlertType.ERROR);
+	        }
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			alerta("Ocurrio un error", AlertType.ERROR);
+			
+		}
+		
+		
+		
+	}
+	
+	public void borrar(ActionEvent event) {
+		
+		Prestamo pres = (Prestamo) obtenerObjetoFoco();
+		if(pres != null) {
+			try {
+				
+				// se consigue el libro que va a borrarse.
+				Libro lb = manager.readLibro(pres.getIsbn());
+				
+				manager.delete(pres);
+				// cambiamos la dispiniblidad.
+				lb.setDisponibilidad(true);
+				manager.update(lb);
+				alerta("¿Seguro que quieres devolver el libro?", AlertType.CONFIRMATION);
+				// añadir logica para cancelar.
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				alerta("Error al devolver el libro", AlertType.ERROR);
+			}
+		}
+		
+		cargarTabla();
+	}
+	
+	
+	/**
+	 * Devuelve el objeto usuairo selecionado en la lista.
+	 * @return
+	 */
+	public Object obtenerObjetoFoco() {
+		ObservableList<?> listaPrestamos;
+		
+		listaPrestamos = tablaPrestamos.getSelectionModel().getSelectedItems();
+		
+		if(listaPrestamos.isEmpty()) {
+			alerta("Selecione una fila para borrar", AlertType.ERROR);
+			return 0;
+		}
+		return listaPrestamos.get(0);
+	}
+	
+	public boolean checkDisponibilidad(int isbn) throws Exception{
+		
+		Libro lb = buscarLibro(isbn);
+		if(lb.getDisponibilidad()) {
+			return true;
+			
+		}else {
+			return false;
+		}
+		
+		
+	}
+	
+	public boolean maximoPrestAlcanzados(int nsocio) {
+		
+		if(manager.contarPrestamos(nsocio)> 3) {
+			
+			alerta("No se puede tener más de 3 libros en prestamos.", AlertType.ERROR);
+			
+			return true;
+			
+		}
+		else {
+			return false;
+		}
+	}
+	
 	
 }
