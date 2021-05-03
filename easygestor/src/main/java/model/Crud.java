@@ -386,5 +386,28 @@ public class Crud {
     	
     }
     
+    public Libro getLibroPrestado(int isbn) {
+    	Session session = null;
+    	
+
+    	session = sessionFactory.openSession();
+        session.beginTransaction();
+        //String hql = "FROM Libro E WHERE E.isbn = (select p.isbn from Prestamo as p) AND E.isbn = :libro_ibsn";
+        String hql = "FROM Libro E WHERE E.isbn = (select p.isbn from Prestamo as p WHERE p.isbn =:libro_ibsn) ";
+        Query qy = session.createQuery(hql);
+        qy.setParameter("libro_ibsn", isbn);
+        
+        Libro lb = (Libro) qy.getResultList().get(0);
+      
+       
+            
+        session.getTransaction().commit();
+        session.close();
+        
+        return lb;
+    	
+    	
+    }
+    
 
 }
