@@ -409,5 +409,22 @@ public class Crud {
     	
     }
     
+    public List<Prestamo> getPrestamoPorTitulos(String titulo) {
+    	
+    	
+    	Session session = null;
+    	List<Prestamo>prestamos = null;
+    	
+    	session = sessionFactory.openSession();
+    	//String hql = "FROM Prestamo p JOIN Libro l on p.isbn=:l.isbn";
+    	String hql = "SELECT p FROM Prestamo p, Libro l where p.isbn = l.isbn AND titulo LIKE :palabra ";
+    	Query qy = session.createQuery(hql);
+    	qy.setParameter("palabra", "%" +titulo+ "%");
+    	
+    	prestamos = qy.getResultList();
+    	
+    	return prestamos;
+    }
+    
 
 }
