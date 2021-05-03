@@ -71,7 +71,7 @@ public class PrestamoController implements Initializable {
     private Button botonDevolver;
 
     @FXML
-    private TextField searchNsocio;
+    private TextField searchTitulo;
     
     public Crud manager;
     
@@ -93,6 +93,7 @@ public class PrestamoController implements Initializable {
 		detectSelect();
 		detectarEstrituraLibro(textIsbn);
 		detectarEstrituraUsuario(textNsocio);
+		detectarPulsaciones();
 		
 		//System.out.println(manager.contarPrestamos(1));
 		
@@ -102,7 +103,10 @@ public class PrestamoController implements Initializable {
 		
 		//System.out.println(manager.relacionUsuario(843700).getTitulo());
 		
-
+		//System.out.println(manager.getPrestamoPorTitulos("refor").get(0).getIsbn());
+		searchTitulo.setPromptText("Buscar por título");
+		textIsbn.setPromptText("6 primeros digitos");
+		textNsocio.setPromptText("N socio");
 		
 		
 		
@@ -287,6 +291,10 @@ public class PrestamoController implements Initializable {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param event
+	 */
 	public void prestar(ActionEvent event) {
 		
 		try {
@@ -441,6 +449,59 @@ public class PrestamoController implements Initializable {
 		
 	}
 	
+	public void detectarPulsaciones() {
+		
+		searchTitulo.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				System.out.println("Cambios");
+				cargarTablaBusqueda(searchTitulo.getText().toString());
+				
+			}
+			
+		});
+		
+	}
+	
+	/**
+	 * Carga la tabla y muestra los perstamos que coinciden con el titulo.
+	 * @param titulo
+	 */
+	public void cargarTablaBusqueda(String titulo) {
+		
+		tablaPrestamos.getItems().clear();
+		
+		//List<Prestamo> prestamos = manager.findAllPrestamos();
+		List<Prestamo> prestamos = manager.getPrestamoPorTitulos(titulo);
+
+		
+		//Creamos un objeto Observable donde se guardarán todos los objetos usuarios.
+		ObservableList<Prestamo> listaPrestamos = FXCollections.observableArrayList(prestamos);
+		
+		//idea como añadir el titulo relacionado.
+		
+		//se envia a la celda el parametro a mostar
+		//columId.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("id_prestamo"));
+		columId.setCellValueFactory(data -> {
+			
+			Libro lb = manager.getLibroPrestado(data.getValue().getIsbn());
+			
+			
+			
+			return new ReadOnlyStringWrapper(lb.getTitulo());
+		});
+		columNsocio.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("Nsocio"));
+		columIsbn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("isbn"));
+		columFechaPrestamo.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("fecha_prestamo"));
+		columFechaEntrega.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("fecha_limite_prestamo"));
+		
+		
+		//Añadimos los Usuarios a la tabla.
+		tablaPrestamos.setItems(listaPrestamos);
+		
+	}
 	
 
 	
