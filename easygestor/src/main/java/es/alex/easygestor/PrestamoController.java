@@ -1,10 +1,13 @@
 package es.alex.easygestor;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,13 +18,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javassist.tools.Callback;
 import model.Crud;
 import model.Libro;
+
 import model.Prestamo;
 import model.Usuario;
 import model.Prestamo;
@@ -88,11 +94,17 @@ public class PrestamoController implements Initializable {
 		detectarEstrituraLibro(textIsbn);
 		detectarEstrituraUsuario(textNsocio);
 		
-		System.out.println(manager.contarPrestamos(1));
+		//System.out.println(manager.contarPrestamos(1));
 		
 		
 		botonPrestar.setOnAction(this::prestar);
 		botonDevolver.setOnAction(this::borrar);
+		
+		//System.out.println(manager.relacionUsuario(843700).getTitulo());
+		
+
+		
+		
 		
 	}
 	
@@ -100,17 +112,30 @@ public class PrestamoController implements Initializable {
 	/**
 	 * Carga los usuarios en la base de datos y los inserta en la tabla.
 	 */
+
 	public void cargarTabla() {
 			
 			tablaPrestamos.getItems().clear();
+			
+			//List<Prestamo> prestamos = manager.findAllPrestamos();
 			List<Prestamo> prestamos = manager.findAllPrestamos();
+
+			
 			//Creamos un objeto Observable donde se guardarán todos los objetos usuarios.
 			ObservableList<Prestamo> listaPrestamos = FXCollections.observableArrayList(prestamos);
 			
 			//idea como añadir el titulo relacionado.
 			
 			//se envia a la celda el parametro a mostar
-			columId.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("id_prestamo"));
+			//columId.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("id_prestamo"));
+			columId.setCellValueFactory(data -> {
+				
+				Libro lb = manager.getLibroPrestado(data.getValue().getIsbn());
+				
+				
+				
+				return new ReadOnlyStringWrapper(lb.getTitulo());
+			});
 			columNsocio.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("Nsocio"));
 			columIsbn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("isbn"));
 			columFechaPrestamo.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("fecha_prestamo"));
@@ -293,6 +318,9 @@ public class PrestamoController implements Initializable {
 		       
 				cargarTabla();
 				
+				textIsbn.setText("");
+				textNsocio.setText("");
+				
 				
 		        
 		        
@@ -388,5 +416,37 @@ public class PrestamoController implements Initializable {
 		}
 	}
 	
+	public List<Prestamo> getPrestamosIncumplidos(){
+		
+		List<Prestamo> fechas = manager.findAllPrestamos();
+		
+		List<Prestamo> pasadas = new ArrayList<Prestamo>();
+		
+		for(Prestamo fecha: fechas) {
+			
+			long now = System.currentTimeMillis();
+	        Date dateNow= new Date(now);
+			Date fechaLimite = fecha.getFecha_limite_prestamo();
+			
+			if(dateNow.after(fechaLimite)) {
+				pasadas.add(fecha);
+			}
+			
+			
+		}
+		
+		
+		return null;
+		
+		
+	}
+	
+	
+
+	
+	
+	
 	
 }
+
+
