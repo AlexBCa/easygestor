@@ -79,7 +79,12 @@ public class PrimaryController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		
+		
 		loadUI("ui_usuarios");
+		
+		
+		
+		/*
 		
 		System.out.println("Hola");
 		
@@ -125,15 +130,8 @@ public class PrimaryController implements Initializable {
 		
 		Crud c = new Crud();
 		
-		//c.setup();
-		/*
-		 
-		 
-		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) c.findAllUsuarios();
+	
 		
-		for(Usuario u: usuarios) {
-			System.out.println(u.getNombre());
-		}
 		*/
 		
 		
