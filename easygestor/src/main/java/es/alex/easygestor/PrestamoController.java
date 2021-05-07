@@ -367,7 +367,7 @@ public class PrestamoController implements Initializable {
 				// cambiamos la dispiniblidad.
 				lb.setDisponibilidad(true);
 				manager.update(lb);
-				alerta("¿Seguro que quieres devolver el libro?", AlertType.CONFIRMATION);
+				alerta("Libro borrado", AlertType.INFORMATION);
 				// añadir logica para cancelar.
 				
 			} catch (Exception e) {
