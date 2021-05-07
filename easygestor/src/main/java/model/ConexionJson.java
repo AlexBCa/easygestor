@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -27,11 +28,11 @@ public class ConexionJson {
 		
 	}
 	// leer json el archivo.
-	public void leerArchivo() throws IOException {
+	public String leerArchivo() throws IOException {
 		
-		String texto = Files.readString(Path.of(System.getProperty("user.dir")+"\\config.json"));
-		System.out.println(texto);
-		
+		String textoJson = Files.readString(Path.of(System.getProperty("user.dir")+"\\config.json"));
+		System.out.println(textoJson);
+		return textoJson;
 	}
 	
 	//crear Json
@@ -42,14 +43,40 @@ public class ConexionJson {
 		json.put("password", "");
 		json.put("configurado", false);
 		
-		String textJson = json.toString();
-		
-		guardarArchivo(textJson);
+		//String textJson = json.toString();
+		StringWriter out = new StringWriter();
+	    json.write(out);
+	    
+		guardarArchivo(out.toString());
 		
 		
 		
 		
 	}
+	
+	public void addInfoJson(String name, String password) throws IOException {
+		
+		String textoJson = leerArchivo();
+		JSONObject json = new JSONObject(textoJson);
+		
+		json.put("nombre", name);
+		json.put("password", password);
+		json.put("configurado", true);
+		
+		guardarArchivo(json.toString());
+		
+		
+	}
+	
+	public boolean checkConfig() throws IOException {
+		String textoJson = leerArchivo();
+		JSONObject json = new JSONObject(textoJson);
+		
+		return (boolean) json.get("configurado");
+		
+	}
+	
+	
 	
 	
 	
