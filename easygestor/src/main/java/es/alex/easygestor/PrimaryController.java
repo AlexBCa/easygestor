@@ -1,5 +1,6 @@
 package es.alex.easygestor;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -7,12 +8,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javax.mail.MessagingException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import model.ConexionJson;
 import model.Crud;
 import model.Libro;
 import model.Prestamo;
@@ -83,7 +87,15 @@ public class PrimaryController implements Initializable {
 		loadUI("ui_usuarios");
 		
 		
-		
+		ConexionJson js = new ConexionJson();
+		try {
+			SendEmail enviarEmail = new SendEmail("estaneurona@gmail.com");
+			enviarEmail.send();
+			
+		} catch (IOException | MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		/*
 		
 		System.out.println("Hola");
