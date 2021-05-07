@@ -73,7 +73,7 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		
 		cargarTabla();
 		botonEdit(resources);
-		cambios();
+		detectarEscritura();
 		detectSelect();
 		buscar_user.setPromptText("Buscar Apellidos");
 		
@@ -208,7 +208,7 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		if(user != null) {
 			try {
 				manager.delete(user);
-				alerta("¿Seguro que quieres borrar el usuario?", AlertType.CONFIRMATION);
+				alerta("Usuario borrado", AlertType.INFORMATION);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -225,14 +225,14 @@ public class UsuarioController extends PanelPadre implements Initializable {
 	/**
 	 * Detecta cada cambio en el TextField y lanza un evento.
 	 */
-	public void cambios() {
+	public void detectarEscritura() {
 		
 		buscar_user.textProperty().addListener(new ChangeListener<String>() {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				// TODO Auto-generated method stub
-				System.out.println("Cambios");
+				//System.out.println("Cambios");
 				cargarTablaPersonalizada(buscar_user.getText().toString());
 			}
 			
