@@ -96,9 +96,12 @@ public class AddUsuarioController implements Initializable{
 				valido = false;
 				throw new Exception();
 				
+			}else if(!(EmailValidator.getInstance().isValid(textEmail.getText()))) {
+				valido = false;
+				alerta("Email no valido", AlertType.ERROR);
+				
 			}else {
 				valido = true;
-				
 			}
 			
 		}
@@ -237,11 +240,7 @@ public class AddUsuarioController implements Initializable{
 	    
 	}
 	
-	public boolean validarEmail(String email) {
-		boolean valid = EmailValidator.getInstance().isValid(email);
-		return valid;
-	}
-	
+
 	
 
 }
