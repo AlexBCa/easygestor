@@ -55,12 +55,20 @@
 	    <version>1.7</version>
 	</dependency>
 	
-	<!-- https://mvnrepository.com/artifact/org.json/json -->
+	<!-- API para trabajar con json -->
+	<dependency>
+	    <groupId>org.json</groupId>
+	    <artifactId>json</artifactId>
+	    <version>20210307</version>
+	</dependency>
+	
+	<!-- API para trabajar con email -->
 <dependency>
-    <groupId>org.json</groupId>
-    <artifactId>json</artifactId>
-    <version>20210307</version>
+    <groupId>javax.mail</groupId>
+    <artifactId>mail</artifactId>
+    <version>1.4.7</version>
 </dependency>
+	
 	
 	
 		
