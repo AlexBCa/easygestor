@@ -100,15 +100,12 @@ public class LibroController implements Initializable{
 			ObservableList<Libro> listaLibros = FXCollections.observableArrayList(libros);
 			
 			
-			//se envia a la celda el parametro a mostar
+			//se envia a la celda el parametro a mostrar
 			columIsbn.setCellValueFactory(new PropertyValueFactory<Libro, String>("isbn"));
 			columTitulo.setCellValueFactory(new PropertyValueFactory<Libro, String>("titulo"));
 			columAutor.setCellValueFactory(new PropertyValueFactory<Libro, String>("autores"));
 			columEditorial.setCellValueFactory(new PropertyValueFactory<Libro, String>("editorial"));
 			
-			//PropertyValueFactory valor = new PropertyValueFactory<Libro, String>("disponibilidad");
-			
-			//columDispo.setCellValueFactory(new PropertyValueFactory<Libro, String>("disponibilidad"));
 			columDispo.setCellValueFactory(data -> {
 				boolean valor = data.getValue().getDisponibilidad();
 				String res = "";
@@ -122,7 +119,7 @@ public class LibroController implements Initializable{
 				return new ReadOnlyStringWrapper(res);
 			});
 			
-			//Añadimos los Usuarios a la tabla.
+		
 			tablaLibros.setItems(listaLibros);
 			
 		}
