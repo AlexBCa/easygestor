@@ -9,15 +9,36 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import org.json.JSONObject;
 
+import security.Aes256;
+
 public class ConexionJson {
+	
+	Aes256 aes256;
+	
+	public ConexionJson() {
+		aes256 = new Aes256();
+	}
 	
 
 	
 	//guardar json en memoria.
 	
+	/**
+	 * Guarda un archivo json en el disco.
+	 * @param json
+	 * @throws IOException
+	 */
 	public void guardarArchivo(String json) throws IOException {
 		File archivo = new File("config.json");
 		
@@ -27,7 +48,12 @@ public class ConexionJson {
 	    writer.close();
 		
 	}
-	// leer json el archivo.
+	
+	/**
+	 * Lee un fichero json en disco.
+	 * @return
+	 * @throws IOException
+	 */
 	public String leerArchivo() throws IOException {
 		
 		String textoJson = Files.readString(Path.of(System.getProperty("user.dir")+"\\config.json"));
@@ -35,7 +61,10 @@ public class ConexionJson {
 		return textoJson;
 	}
 	
-	//crear Json
+	/**
+	 * Se crea un json con los parametros basicos y se guarda en disco.
+	 * @throws IOException
+	 */
 	public void createJson() throws IOException {
 		
 		JSONObject json = new JSONObject();
@@ -54,13 +83,31 @@ public class ConexionJson {
 		
 	}
 	
-	public void addInfoJson(String name, String password) throws IOException {
+	/**
+	 * Añade el nombre y password al Json, cambia la disponibilidad a True, cifra y guarda en el disco.
+	 * @param name
+	 * @param password
+	 * @throws IOException
+	 * @throws InvalidKeyException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws InvalidAlgorithmParameterException
+	 * @throws InvalidKeySpecException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 */
+	public void addInfoJson(String name, String password) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException {
+		
 		
 		String textoJson = leerArchivo();
 		JSONObject json = new JSONObject(textoJson);
 		
+		String userPasswordEncrypt = aes256.cifrar(password);
+		
+		System.out.println(userPasswordEncrypt);
+		
 		json.put("nombre", name);
-		json.put("password", password);
+		json.put("password", userPasswordEncrypt);
 		json.put("configurado", true);
 		
 		guardarArchivo(json.toString());
@@ -68,6 +115,11 @@ public class ConexionJson {
 		
 	}
 	
+	/**
+	 * Comprueba si el json esta configurado.
+	 * @return
+	 * @throws IOException
+	 */
 	public boolean checkConfig() throws IOException {
 		String textoJson = leerArchivo();
 		JSONObject json = new JSONObject(textoJson);
@@ -76,6 +128,36 @@ public class ConexionJson {
 		
 	}
 	
+	/**
+	 * Devuelve el usuario y la contraseña del json, luego descifra la contraseña.
+	 * @return
+	 * @throws IOException
+	 * @throws InvalidKeyException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws InvalidAlgorithmParameterException
+	 * @throws NoSuchAlgorithmException
+	 * @throws InvalidKeySpecException
+	 * @throws NoSuchPaddingException
+	 */
+	public String[] getUserAndPassFromJson() throws IOException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException {
+		
+		String textoJson = leerArchivo();
+		JSONObject json = new JSONObject(textoJson);
+		
+		String user = json.getString("nombre");
+		String password = json.getString("password");
+		
+		
+		String passwordPlainText = aes256.descrifrar(password);
+		System.out.println(passwordPlainText);
+		
+		String[] contenedor = {user, passwordPlainText};
+		
+		return contenedor;
+	}
+	
+
 	
 	
 	
