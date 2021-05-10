@@ -86,6 +86,8 @@ public class LibroController implements Initializable{
 		botonDel.setOnAction(this::borrar);
 		
 		searchLibros.setPromptText("Buscar por título");
+		
+		
 	}
 	
 	
