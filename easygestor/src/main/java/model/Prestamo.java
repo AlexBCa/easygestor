@@ -22,6 +22,7 @@ public class Prestamo implements Serializable{
 	private int isbn;
 	private Date fecha_prestamo;
 	private Date fecha_limite_prestamo;
+	private boolean multado;
 	
 	public Prestamo() {
 		
@@ -89,6 +90,20 @@ public class Prestamo implements Serializable{
 	public void setFecha_limite_prestamo(Date fecha_limite_prestamo) {
 		this.fecha_limite_prestamo = fecha_limite_prestamo;
 	}
+
+
+
+	public boolean isMultado() {
+		return multado;
+	}
+
+
+
+	public void setMultado(boolean multado) {
+		this.multado = multado;
+	}
+	
+	
 
 
 }
