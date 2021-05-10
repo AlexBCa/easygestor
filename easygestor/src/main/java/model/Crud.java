@@ -2,7 +2,7 @@ package model;
 
 import model.Usuario;
 
-
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -424,6 +424,33 @@ public class Crud {
     	prestamos = qy.getResultList();
     	
     	return prestamos;
+    }
+    
+    public List<Prestamo> getPrestamosSinMultar() {
+    	Session session = null;
+    	List<Prestamo>prestamos = null;
+    	
+    	try {
+    		session = sessionFactory.openSession();
+    		long now = System.currentTimeMillis();
+	        Date dateNow= new Date(now);
+        	//prestamos = session.createQuery("SELECT a FROM Prestamo a").getResultList();
+    		String hql = "FROM Prestamo p WHERE  p.fecha_limite_prestamo < current_date AND multado = 0";
+        	Query qy = session.createQuery(hql);
+        	//qy.setParameter("current_date", dateNow);
+        	prestamos = qy.getResultList();
+        	
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	finally {
+    		if(session != null) {
+    			session.close();
+    		}
+    	}
+        
+        return prestamos;     
     }
     
 
