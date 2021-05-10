@@ -6,6 +6,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.mail.MessagingException;
@@ -14,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import model.ConexionJson;
@@ -58,6 +60,10 @@ public class PrimaryController implements Initializable {
     	loadUI("ui_prestamo");
 
     }
+    
+    Crud manager;
+
+    
 
 
 
@@ -86,69 +92,60 @@ public class PrimaryController implements Initializable {
 		
 		loadUI("ui_usuarios");
 		
-		
-		ConexionJson js = new ConexionJson();
-		try {
-			SendEmail enviarEmail = new SendEmail("estaneurona@gmail.com");
-			enviarEmail.send();
-			
-		} catch (IOException | MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		/*
-		
-		System.out.println("Hola");
-		
-		Usuario user = new Usuario();
-		user.setNsocio(2541615);
-		user.setDni("55d56d");
-		user.setNombre("Ana");
-		user.setApellidos("Jimenez");
-		user.setDireccion("calle falsa 123");
-		user.setEmail("email@falso.com");
-		user.setTelefono(955555);
-		
-		Usuario useralt = new Usuario();
-		useralt.setNsocio(2541615);
-		useralt.setDni("55d56d");
-		useralt.setNombre("Ana");
-		useralt.setApellidos("Jimenez Rodriguez");
-		useralt.setDireccion("calle falsa 123");
-		useralt.setEmail("email@falso.com");
-		useralt.setTelefono(955555);
-		
-		Libro l = new Libro();
-		l.setIsbn(585855);
-		l.setAutores("Dawking");
-		l.setEdicion("primera");
-		l.setEditorial("ni idea");
-		l.setTitulo("El gen egoista");
-		l.setDisponibilidad(true);
-		
-		Prestamo pr = new Prestamo();
-		pr.setIsbn(585855);
-		pr.setNsocio(2541615);
-		
-		long now = System.currentTimeMillis();
-        Date sqlDate = new Date(now);
-        
-        // Sumamos 15 dias en ms
-        Date limite = new Date(now+1296000000);
-        
-		pr.setFecha_prestamo(sqlDate);
-		pr.setFecha_limite_prestamo(limite);
+		iniciarConfigJson();
 		
 		
-		Crud c = new Crud();
 		
 	
 		
-		*/
+
 		
 		
 		
 		
 		
 	}
+
+	private void iniciarConfigJson() {
+		//comprobar si existe el archivo de json y iniciarlo
+		try {
+			File fileJson = new File("config.json");
+			ConexionJson manageJson = new ConexionJson();
+			
+			if(!(fileJson.exists())) {
+				manageJson.createJson();
+				alerta("Recuerde que puede configurar el envio automatico de Email ",
+						Alert.AlertType.INFORMATION);
+			}
+			else if(!(manageJson.checkConfig())) {
+				alerta("Recuerde que puede configurar el envio automatico de Email ",
+						Alert.AlertType.INFORMATION);
+			}
+			else {
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			alerta("Error al cargar la configuración",
+					Alert.AlertType.ERROR);
+		}
+	}
+	
+	
+	/**
+	 * Lanza una alerta al usuario.
+	 * @param nombre. Texto de la alerta.
+	 * @param alert. Tipo de la alerta.
+	 */
+	public void alerta(String nombre, Alert.AlertType alert) {
+		Alert alerta = new Alert(alert, nombre);
+		
+		alerta.showAndWait();
+	}
+	
+
+	
+	
+
 }
