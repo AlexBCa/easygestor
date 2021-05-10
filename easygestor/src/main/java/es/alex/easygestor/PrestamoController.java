@@ -330,6 +330,8 @@ public class PrestamoController implements Initializable {
 				textNsocio.setText("");
 				
 				
+				
+				
 		        
 		        
 		        
@@ -442,11 +444,7 @@ public class PrestamoController implements Initializable {
 			
 			
 		}
-		
-		
 		return null;
-		
-		
 	}
 	
 	public void detectarPulsaciones() {
