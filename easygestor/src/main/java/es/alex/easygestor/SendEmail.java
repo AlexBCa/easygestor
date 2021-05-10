@@ -1,5 +1,6 @@
 package es.alex.easygestor;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
@@ -10,6 +11,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import model.ConexionJson;
+
 
 /**
  * importante es necesario configurar
@@ -19,15 +22,17 @@ import javax.mail.internet.MimeMessage;
  */
 public class SendEmail {
 	
-	static final String FROM = "anajr991@gmail.com";
-	static final String FROMNAME = "anajr991";
-	static final String SMTP_USERNAME = "anajr991";
-	static final String SMTP_PASSWORD = "Kuro.Neko.32";
+	private String from;
+	private  String fromName = "anajr991";
+	//private  String SMTP_USERNAME = "anajr991";
+	private  String SMTP_USERNAME;
+	//private  String SMTP_PASSWORD = "Kuro.Neko.32";
+	private  String SMTP_PASSWORD;
 	static final String HOST = "smtp.gmail.com";
 	static final String SUBJECT = "Amazon SES test (SMTP interface accessed using Java)";
 	static final int PORT = 587;
 	
-	String TO = "estaneurona@gmail.com";
+	private String TO = "estaneurona@gmail.com";
 
 	
 	static final String BODY = String.join(
@@ -38,11 +43,13 @@ public class SendEmail {
     	    " for <a href='https://www.java.com'>Java</a>."
     	);
 	
-	public SendEmail(String to) {
-		this.TO = to;
+	public SendEmail() {
+		
 		
 	}
-	
+	/**
+	 * Esta función recoge las variables estaticas y  envia el mensaje.
+	 */
 	public void send() throws MessagingException, UnsupportedEncodingException {
 		// crear propiedades
 		Properties props = System.getProperties();
@@ -56,7 +63,7 @@ public class SendEmail {
     	
     	//creamos un mensaje con nuestra sesion
     	MimeMessage msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(FROM,FROMNAME));
+        msg.setFrom(new InternetAddress(from,fromName));
         msg.setRecipient(Message.RecipientType.TO, new InternetAddress(TO));
         msg.setSubject(SUBJECT);
         msg.setContent(BODY,"text/html");
@@ -71,5 +78,39 @@ public class SendEmail {
         transport.sendMessage(msg, msg.getAllRecipients());
         System.out.println("Email sent!");
 	}
+	
+	
+	
+	public String getFROM() {
+		return from;
+	}
+	public void setFROM(String fROM) {
+		from = fROM;
+	}
+	public String getFROMNAME() {
+		return fromName;
+	}
+	public void setFROMNAME(String fROMNAME) {
+		fromName = fROMNAME;
+	}
+	public String getSMTP_USERNAME() {
+		return SMTP_USERNAME;
+	}
+	public void setSMTP_USERNAME(String sMTP_USERNAME) {
+		SMTP_USERNAME = sMTP_USERNAME;
+	}
+	public String getSMTP_PASSWORD() {
+		return SMTP_PASSWORD;
+	}
+	public void setSMTP_PASSWORD(String sMTP_PASSWORD) {
+		SMTP_PASSWORD = sMTP_PASSWORD;
+	}
+	public String getTO() {
+		return TO;
+	}
+	public void setTO(String tO) {
+		TO = tO;
+	}
+	
 	
 }
