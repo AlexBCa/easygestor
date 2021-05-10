@@ -1,9 +1,19 @@
 package es.alex.easygestor;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.mail.MessagingException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,8 +36,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.ConexionJson;
 import model.Crud;
+import model.Prestamo;
 import model.Usuario;
+import security.Aes256;
 
 public class UsuarioController extends PanelPadre implements Initializable {
 	
@@ -60,6 +73,7 @@ public class UsuarioController extends PanelPadre implements Initializable {
     private TextField buscar_user;
     
     public Crud manager;
+    public SendEmail managerEmail;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -70,6 +84,9 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		manager = new Crud();
 		manager.setup();
 		
+		managerEmail = new SendEmail();
+		
+		
 		
 		cargarTabla();
 		botonEdit(resources);
@@ -77,16 +94,62 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		detectSelect();
 		buscar_user.setPromptText("Buscar Apellidos");
 		
+		
+		
+		
 		add_user.setOnAction(this::botonAdd);
 		del_user.setOnAction(this::botonDel);
 		
 		
+		sendEmailMulta();
+		
+		/*
+		
+		Aes256 aes = new Aes256();
+		
+		try {
+			String texto = aes.cifrar("contraseña");
+			System.out.println(texto);
+			System.out.println(aes.descrifrar("l/Pf0T9L2IhmmaJNXngjIQ=="));
+			
+			
+			ConexionJson json = new ConexionJson();
+			//json.getUserAndPass();
+			
+			
+			
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidAlgorithmParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		
-		
-		
-		
+*/
 	
 		
 	}
@@ -111,6 +174,8 @@ public class UsuarioController extends PanelPadre implements Initializable {
 			
 			//Añadimos los Usuarios a la tabla.
 			tabla_user.setItems(listaUsuarios);
+			
+			
 			
 		}
 	
@@ -280,6 +345,76 @@ public class UsuarioController extends PanelPadre implements Initializable {
 				}
 			}
 		});
+	}
+	
+	/**
+	 * Envia un correo a todos los usuarios que tengan un retraso en la entrega y cambia lo marca como multado.
+	 */
+	public void sendEmailMulta() {
+		
+		try {
+			ConexionJson json = new ConexionJson();
+			if(json.checkConfig()) {
+				
+				
+				List<Prestamo> getPrestamos = manager.getPrestamosSinMultar();
+				if(!(getPrestamos.isEmpty())) {
+					for(Prestamo prestamoMultar: getPrestamos ) {
+						
+						Usuario usuarioMultar = manager.readUsuario(prestamoMultar.getNsocio());
+						
+						managerEmail.setTO(usuarioMultar.getEmail());
+						
+
+						setUserAndPassToEmail();
+						
+						managerEmail.send();
+						prestamoMultar.setMultado(true);
+						manager.update(prestamoMultar);
+						
+						
+					}
+				}
+				
+			}
+
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			alerta("Contraseña equivocada", Alert.AlertType.ERROR);
+			
+		}
+		
+		
+		
+	}
+	/**
+	 * Cogemos el usuario y contraseña del json y se la pasabamos la configuramos para el gmail
+	 * @throws IOException
+	 * @throws NoSuchPaddingException 
+	 * @throws InvalidKeySpecException 
+	 * @throws NoSuchAlgorithmException 
+	 * @throws InvalidAlgorithmParameterException 
+	 * @throws BadPaddingException 
+	 * @throws IllegalBlockSizeException 
+	 * @throws InvalidKeyException 
+	 */
+	
+	public void setUserAndPassToEmail() throws IOException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException {
+		
+		ConexionJson json = new ConexionJson();
+		
+		String[] userAndPass = json.getUserAndPassFromJson();
+		int index = userAndPass[0].indexOf("@");
+		String userName = userAndPass[0].substring(0, index);
+		//managerEmail.setFROM(userAndPass[0]);
+		managerEmail.setFROM(userAndPass[0]);
+		//managerEmail.setSMTP_PASSWORD(userAndPass[1]);
+		managerEmail.setSMTP_PASSWORD(userAndPass[1]);
+		managerEmail.setFROMNAME(userName);
+		managerEmail.setSMTP_USERNAME(userName);
+		
+		
 	}
 	
 
