@@ -13,6 +13,9 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -158,6 +161,57 @@ public class ConexionJson {
 	}
 	
 
+	
+	public void setFecha() throws IOException {
+		
+		String textoJson = leerArchivo();
+		JSONObject json = new JSONObject(textoJson);
+		
+		long now = System.currentTimeMillis();
+        Date dateNow= new Date(now);
+		
+
+		json.put("Fecha", dateNow);
+		
+		
+		guardarArchivo(json.toString());
+		
+	}
+	
+	public Date getFecha() throws IOException, ParseException {
+		
+		String textoJson = leerArchivo();
+		JSONObject json = new JSONObject(textoJson);
+		
+		String dateTodayText = json.getString("Fecha");
+		
+		
+		Date dateToday = Date.valueOf(dateTodayText);
+		
+		return dateToday;
+		
+		
+	}
+	
+	public boolean compareFechas() throws IOException, ParseException {
+		
+		boolean valido = false;
+		
+		long now = System.currentTimeMillis();
+        Date dateNow= new Date(now);
+        System.out.println(dateNow);
+        
+        Date dateFromJson = getFecha();
+        
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+        
+        
+        if(dateNow.after(dateFromJson) && !(fmt.format(dateNow).equals(fmt.format(dateFromJson)))) {
+        	valido = true;
+        }
+        
+        return valido;
+	}
 	
 	
 	
