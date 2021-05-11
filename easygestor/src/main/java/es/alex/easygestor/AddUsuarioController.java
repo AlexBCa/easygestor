@@ -1,14 +1,21 @@
 package es.alex.easygestor;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -42,12 +49,17 @@ public class AddUsuarioController implements Initializable{
 
     @FXML
     private Button botonExit;
+    
+    @FXML
+    private AnchorPane panel;
 	
 	private Usuario user;
 	
 	private Crud manageCrud;
 	
 	public boolean modeEdit;
+	
+	private final int limitLenghtTelefono = 9;
 
 	public void initData(Usuario selectedItem) {
 		// TODO Auto-generated method stub
@@ -71,10 +83,18 @@ public class AddUsuarioController implements Initializable{
 		manageCrud = new Crud();
 		manageCrud.setup();
 		
+		//Stage stage = (Stage) textDni.getScene().getWindow();
+		
 		
 		botonSave.setOnAction(this::selectMode);
 		botonExit.setOnAction(this::close);
 		
+		
+		
+		
+		
+		
+
 		
 		
 		
@@ -100,7 +120,15 @@ public class AddUsuarioController implements Initializable{
 				valido = false;
 				alerta("Email no valido", AlertType.ERROR);
 				
-			}else {
+			}
+			else if(!(validarDni(textDni.getText()))) {
+				alerta("El DNI no tiene el formato correcto", AlertType.ERROR);
+				
+			}
+			else if(textTele.getText().length()>9){
+				alerta("El numero de teléfono no valido", AlertType.ERROR);
+			}
+			else {
 				valido = true;
 			}
 			
@@ -238,6 +266,16 @@ public class AddUsuarioController implements Initializable{
 		ventana.fireEvent(new WindowEvent(ventana, WindowEvent.WINDOW_CLOSE_REQUEST));
 	    // do what you have to do
 	    
+	}
+	
+	public boolean validarDni(String dni) {
+		//Copila las expresiones regular
+		// la expresión regular dicta que tenga que tener 8 numeros y una cadena.
+		Pattern pat = Pattern.compile("[0-9]{7,8}[A-Z a-z]");
+		// Comprobamos el dni con el patrón pasadado como expresión regular.
+		Matcher mat = pat.matcher(dni);
+		
+		return mat.matches();
 	}
 	
 
