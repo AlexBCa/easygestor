@@ -238,7 +238,8 @@ public class LibroController implements Initializable{
 			// Cargamos la informacion de la ventana de edicion que abriremos
 			FXMLLoader loader = new FXMLLoader(App.class.getResource("ui_libro_add.fxml"));
 			Stage stage = new Stage();
-			stage.setTitle("Editar libro");
+			stage.setTitle("Añadir libro");
+			stage.setResizable(false);
 			Parent root = loader.load();
 			stage.setScene(new Scene(root));
 			stage.show();
@@ -290,6 +291,7 @@ public class LibroController implements Initializable{
 				Stage stage = new Stage();
 				stage.setTitle("Editar libro");
 				Parent root = loader.load();
+				stage.setResizable(false);
 				stage.setScene(new Scene(root));
 				// Añadimos la fila seleccionada al controlador para poder editarlo
 				((AddLibroController) loader.getController()).initData(tablaLibros.getSelectionModel().getSelectedItem());
