@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
@@ -54,8 +55,11 @@ public class AddLibroController implements Initializable {
 		manageCrud.setup();
 		
 		
+		
+		
 		botonSave.setOnAction(this::selectMode);
 		botonExit.setOnAction(this::close);
+		
 		
 		
 	}
@@ -70,7 +74,14 @@ public class AddLibroController implements Initializable {
 		textIsbn.setText(Integer.toString(libro.getIsbn()));
 		
 		getMode();
-		
+		if(modeEdit) {
+			System.out.println("soy true");
+			textIsbn.setDisable(true);
+			
+		}else {
+			System.out.println("soy false");
+			textIsbn.setVisible(true);
+		}
 		
 	}
 	
@@ -126,7 +137,11 @@ public class AddLibroController implements Initializable {
 				valido = false;
 				throw new Exception();
 				
-			}else {
+			}else if(textIsbn.getText().length()>6) {
+				alerta("Escribe solo los 6 primeros números", AlertType.ERROR);
+			}
+			
+			else {
 				valido = true;
 				
 			}
@@ -230,4 +245,6 @@ public class AddLibroController implements Initializable {
 		close(event);
 		
 	}
+	
+	
 }
