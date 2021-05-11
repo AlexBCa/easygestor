@@ -23,13 +23,13 @@ import model.ConexionJson;
 public class SendEmail {
 	
 	private String from;
-	private  String fromName = "anajr991";
+	private  String fromName;
 	//private  String SMTP_USERNAME = "anajr991";
 	private  String SMTP_USERNAME;
 	//private  String SMTP_PASSWORD = "Kuro.Neko.32";
 	private  String SMTP_PASSWORD;
 	static final String HOST = "smtp.gmail.com";
-	static final String SUBJECT = "Amazon SES test (SMTP interface accessed using Java)";
+	static final String SUBJECT = "Plazo de prestamo terminado.";
 	static final int PORT = 587;
 	
 	private String TO = "estaneurona@gmail.com";
@@ -37,8 +37,10 @@ public class SendEmail {
 	
 	static final String BODY = String.join(
     	    System.getProperty("line.separator"),
-    	    "<h1>Amazon SES SMTP Email Test</h1>",
-    	    "<p>This email was sent with Amazon SES using the ", 
+    	    "<h1>Plazo de entrega sobrepasado</h1>",
+    	    "<p>Estimado cliente se le informa que el plazo de prestamo ", 
+    	    "a expirado, por favor, realice la devolución cuento antes.   ",
+    	    "Puede que se apliquen cargos extras dependiendo del tiempo de retraso.   ",
     	    "<a href='https://github.com/javaee/javamail'>Javamail Package</a>",
     	    " for <a href='https://www.java.com'>Java</a>."
     	);
