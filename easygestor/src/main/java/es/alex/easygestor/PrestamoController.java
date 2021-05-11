@@ -21,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
@@ -79,6 +80,10 @@ public class PrestamoController implements Initializable {
     
     public boolean libroValido;
     
+    @FXML
+    private Button botonCambiarView;
+    private int cambioSwitch =0;
+    
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -100,7 +105,9 @@ public class PrestamoController implements Initializable {
 		
 		botonPrestar.setOnAction(this::prestar);
 		botonDevolver.setOnAction(this::borrar);
-		
+		botonCambiarView.setOnAction((event)->{
+			cambiarVistaTabla(event);
+		});
 		//System.out.println(manager.relacionUsuario(843700).getTitulo());
 		
 		//System.out.println(manager.getPrestamoPorTitulos("refor").get(0).getIsbn());
@@ -110,6 +117,29 @@ public class PrestamoController implements Initializable {
 		
 		
 		
+	}
+
+
+	/**
+	 * Alterna la vista entre todos los prestamos y los multados.
+	 * @param event
+	 */
+	private void cambiarVistaTabla(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if(cambioSwitch == 0) {
+			System.out.println("muestra multados ");
+			cambioSwitch = 1;
+			cambiarViewPrestamos();
+			source.setText("Ver todos");
+			
+		}
+		else if (cambioSwitch == 1) {
+			System.out.println("Muestra normal");
+			cambioSwitch =0;
+			cargarTabla();
+			
+			source.setText("Ver multas");
+		}
 	}
 	
 	
@@ -302,7 +332,8 @@ public class PrestamoController implements Initializable {
 			int isbn = Integer.parseInt(textIsbn.getText());
 			int Nsocio = Integer.parseInt(textNsocio.getText());
 			
-			if(checkValidez()&& checkDisponibilidad(isbn)&& !(maximoPrestAlcanzados(Nsocio))) {
+			if(checkValidez()&& checkDisponibilidad(isbn)&& 
+					!(maximoPrestAlcanzados(Nsocio))&& manager.comprobrarMultaUsuario(Nsocio)==0) {
 
 				
 				
@@ -339,6 +370,9 @@ public class PrestamoController implements Initializable {
 			}
 			else if(checkDisponibilidad(isbn) == false) {
 				alerta("El libro ya esta prestado", AlertType.ERROR);
+			}
+			else if(manager.comprobrarMultaUsuario(Nsocio)>0){
+				alerta("El usuario tiene un libo fuera de plazo", AlertType.ERROR);
 			}
 			else {
 	        	alerta("Debe introducir un Nsocio y ISBN validos", AlertType.ERROR);
@@ -500,6 +534,45 @@ public class PrestamoController implements Initializable {
 		tablaPrestamos.setItems(listaPrestamos);
 		
 	}
+	
+	
+	public void cambiarViewPrestamos() {
+		
+		tablaPrestamos.getItems().clear();
+		
+		//List<Prestamo> prestamos = manager.findAllPrestamos();
+		List<Prestamo> prestamos = manager.getPrestamosMultados();
+
+		
+		//Creamos un objeto Observable donde se guardarán todos los objetos usuarios.
+		ObservableList<Prestamo> listaPrestamos = FXCollections.observableArrayList(prestamos);
+		
+		//idea como añadir el titulo relacionado.
+		
+		//se envia a la celda el parametro a mostar
+		//columId.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("id_prestamo"));
+		columId.setCellValueFactory(data -> {
+			
+			Libro lb = manager.getLibroPrestado(data.getValue().getIsbn());
+			
+			
+			
+			return new ReadOnlyStringWrapper(lb.getTitulo());
+		});
+		columNsocio.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("Nsocio"));
+		columIsbn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("isbn"));
+		columFechaPrestamo.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("fecha_prestamo"));
+		columFechaEntrega.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("fecha_limite_prestamo"));
+		
+		
+		//Añadimos los Usuarios a la tabla.
+		tablaPrestamos.setItems(listaPrestamos);
+		
+		
+		
+	}
+	
+	
 	
 
 	
