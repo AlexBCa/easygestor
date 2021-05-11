@@ -453,5 +453,52 @@ public class Crud {
         return prestamos;     
     }
     
+    
+    public List<Prestamo> getPrestamosMultados() {
+    	Session session = null;
+    	List<Prestamo>prestamos = null;
+    	
+    	try {
+    		session = sessionFactory.openSession();
+    		long now = System.currentTimeMillis();
+	        Date dateNow= new Date(now);
+        	//prestamos = session.createQuery("SELECT a FROM Prestamo a").getResultList();
+    		String hql = "FROM Prestamo p WHERE  p.multado = 1";
+        	Query qy = session.createQuery(hql);
+        	//qy.setParameter("current_date", dateNow);
+        	prestamos = qy.getResultList();
+        	
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	finally {
+    		if(session != null) {
+    			session.close();
+    		}
+    	}
+        
+        return prestamos;     
+    }
+    
+    
+    public long comprobrarMultaUsuario(int nsocio) {
+    	Session session = null;
+    	
+
+    	session = sessionFactory.openSession();
+        session.beginTransaction();
+        String hql = "SELECT count(E.id_prestamo) FROM Prestamo E WHERE E.Nsocio = :usuario_nsocio AND E.multado =1";
+        Query qy = session.createQuery(hql);
+        qy.setParameter("usuario_nsocio", nsocio);
+        long count  = (long) qy.uniqueResult();
+            
+        session.getTransaction().commit();
+        session.close();
+        
+        return count;
+    	
+    }
+    
 
 }
