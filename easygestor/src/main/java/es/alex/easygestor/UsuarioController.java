@@ -7,6 +7,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -102,6 +103,18 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		
 		
 		sendEmailMulta();
+		
+		
+		
+		ConexionJson json = new ConexionJson();
+		try {
+			//json.setFecha();
+			System.out.println(manager.comprobrarMultaUsuario(1));
+			System.out.println(json.compareFechas());
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		/*
 		
@@ -216,7 +229,8 @@ public class UsuarioController extends PanelPadre implements Initializable {
 			// Cargamos la informacion de la ventana de edicion que abriremos
 			FXMLLoader loader = new FXMLLoader(App.class.getResource("ui_usuario_add.fxml"));
 			Stage stage = new Stage();
-			stage.setTitle("Editar registro");
+			stage.setResizable(false);
+			stage.setTitle("Añadir registro");
 			Parent root = loader.load();
 			stage.setScene(new Scene(root));
 			stage.show();
@@ -247,12 +261,18 @@ public class UsuarioController extends PanelPadre implements Initializable {
 				// Cargamos la informacion de la ventana de edicion que abriremos
 				FXMLLoader loader = new FXMLLoader(App.class.getResource("ui_usuario_add.fxml"), resources);
 				Stage stage = new Stage();
+				stage.setResizable(false);
 				stage.setTitle("Editar registro");
 				Parent root = loader.load();
+				
+				
 				stage.setScene(new Scene(root));
+				
 				// Añadimos la fila seleccionada al controlador para poder editarlo
 				((AddUsuarioController) loader.getController()).initData(tabla_user.getSelectionModel().getSelectedItem());
+				
 				stage.show();
+				
 				// Evento que se lanzara al cerrar la ventana de edicion y actualizara los datos de la tabla
 				stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 					@Override
@@ -354,7 +374,7 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		
 		try {
 			ConexionJson json = new ConexionJson();
-			if(json.checkConfig()) {
+			if(json.checkConfig()&& json.compareFechas()) {
 				
 				
 				List<Prestamo> getPrestamos = manager.getPrestamosSinMultar();
@@ -362,21 +382,26 @@ public class UsuarioController extends PanelPadre implements Initializable {
 					for(Prestamo prestamoMultar: getPrestamos ) {
 						
 						Usuario usuarioMultar = manager.readUsuario(prestamoMultar.getNsocio());
-						
+						prestamoMultar.setMultado(true);
 						managerEmail.setTO(usuarioMultar.getEmail());
 						
 
 						setUserAndPassToEmail();
 						
 						managerEmail.send();
-						prestamoMultar.setMultado(true);
+						
 						manager.update(prestamoMultar);
 						
 						
 					}
 				}
 				
+				
+				
 			}
+			// Cambiamos la fecha por la actual para denotar que hoy ay se hizo la busqueda.
+			json.setFecha();
+			
 
 		}
 		catch(Exception e) {
@@ -411,11 +436,17 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		managerEmail.setFROM(userAndPass[0]);
 		//managerEmail.setSMTP_PASSWORD(userAndPass[1]);
 		managerEmail.setSMTP_PASSWORD(userAndPass[1]);
+		System.out.println(userAndPass[0]);
+		System.out.println(userAndPass[1]);
+		System.out.println(userName);
+		
 		managerEmail.setFROMNAME(userName);
 		managerEmail.setSMTP_USERNAME(userName);
 		
 		
 	}
+	
+	
 	
 
 }
