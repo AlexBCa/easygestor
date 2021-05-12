@@ -208,7 +208,7 @@
     -fx-background-color: derive(-fx-primary, 20%);
 }
 .table-row-cell {
-    -fx-cell-size: 25px;
+    -fx-cell-size: 26px;
 }
 .table-view .column-header-background{
     -fx-background-color: -fx-primary;
