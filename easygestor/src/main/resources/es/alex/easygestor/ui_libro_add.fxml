@@ -23,26 +23,26 @@
             <RowConstraints maxHeight="67.5999740600586" minHeight="10.0" prefHeight="26.59999542236328" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="textTitulo" prefHeight="26.0" prefWidth="78.0" GridPane.rowIndex="1">
+            <TextField fx:id="textTitulo" prefHeight="26.0" prefWidth="78.0" promptText="Titulo del libro" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Titulo" wrappingWidth="150.13671875" />
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Autores" wrappingWidth="110.13671875" GridPane.rowIndex="2" />
-            <TextField fx:id="textAutor" GridPane.rowIndex="3">
+            <TextField fx:id="textAutor" promptText="Nombre autores" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Editorial" wrappingWidth="110.13671875" GridPane.columnIndex="1" />
-            <TextField fx:id="textEditorial" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="textEditorial" promptText="Editorial" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Edición" wrappingWidth="110.13671875" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="textEdicion" prefHeight="26.0" prefWidth="78.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="textEdicion" prefHeight="26.0" prefWidth="78.0" promptText="La edición" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -51,7 +51,9 @@
       </GridPane>
       <Button fx:id="botonSave" layoutX="103.0" layoutY="223.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="81.0" text="Guardar" />
       <Button fx:id="botonExit" layoutX="251.0" layoutY="223.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="94.0" text="Cancelar" />
-      <Text fill="WHITE" layoutX="201.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" />
-      <TextField fx:id="textIsbn" layoutX="140.0" layoutY="172.0" />
+      <Text fill="WHITE" layoutX="59.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" />
+      <TextField fx:id="textIsbn" layoutX="59.0" layoutY="175.0" prefHeight="26.0" prefWidth="145.0" promptText="6 digitos del ISBN" />
+      <Text fill="WHITE" layoutX="213.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número de copias" />
+      <TextField fx:id="textCopias" layoutX="213.0" layoutY="175.0" prefHeight="26.0" promptText="Número de copias" />
    </children>
 </AnchorPane>
