@@ -117,6 +117,7 @@ public class PrestamoController implements Initializable {
 		
 		
 		
+		
 	}
 
 
@@ -166,7 +167,7 @@ public class PrestamoController implements Initializable {
 				
 				Libro lb = manager.getLibroPrestado(data.getValue().getIsbn());
 				
-				
+				//return new ReadOnlyStringWrapper("test");
 				
 				return new ReadOnlyStringWrapper(lb.getTitulo());
 			});
@@ -348,10 +349,21 @@ public class PrestamoController implements Initializable {
 		        prestamo.setFecha_prestamo(dateNow);
 		        prestamo.setFecha_limite_prestamo(limite);
 		        
+		        
+		        
 		        // Cambiar la disponiblidad.
 		        Libro lb = buscarLibro(isbn);
 		        
-		        lb.setDisponibilidad(false);
+		        lb.setPrestados(lb.getPrestados()+1);
+		        
+		        if(lb.getCopias()==lb.getPrestados()) {
+		        	lb.setDisponibilidad(false);
+		        	
+		        }
+		        
+		        
+		        
+		        
 		        manager.create(prestamo);
 		        manager.update(lb);
 		       
@@ -396,14 +408,25 @@ public class PrestamoController implements Initializable {
 		if(pres != null) {
 			try {
 				
+				
+				
 				// se consigue el libro que va a borrarse.
 				Libro lb = manager.readLibro(pres.getIsbn());
 				
+				
+				
+				lb.setPrestados(lb.getPrestados()-1);
+				
+				if(lb.getCopias()==lb.getPrestados()) {
+					// cambiamos la dispiniblidad.
+					lb.setDisponibilidad(false);
+					
+				}else if(lb.getCopias()>lb.getPrestados()) {
+					lb.setDisponibilidad(true);
+				}
 				manager.delete(pres);
-				// cambiamos la dispiniblidad.
-				lb.setDisponibilidad(true);
 				manager.update(lb);
-				alerta("Libro borrado", AlertType.INFORMATION);
+				alerta("Prestamo devuelto", AlertType.INFORMATION);
 				// añadir logica para cancelar.
 				
 			} catch (Exception e) {
