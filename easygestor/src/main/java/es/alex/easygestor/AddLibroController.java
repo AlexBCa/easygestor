@@ -40,11 +40,16 @@ public class AddLibroController implements Initializable {
     @FXML
     private TextField textIsbn;
     
+    @FXML
+    private TextField textCopias;
+    
     private Libro libro;
     
     private boolean modeEdit;
     
     private Crud manageCrud;
+    
+    
     
 
 	@Override
@@ -72,6 +77,8 @@ public class AddLibroController implements Initializable {
 		textEditorial.setText(libro.getEditorial());
 		textEdicion.setText(libro.getEdicion());
 		textIsbn.setText(Integer.toString(libro.getIsbn()));
+		textCopias.setText(Integer.toString(libro.getCopias()));
+		
 		
 		getMode();
 		if(modeEdit) {
@@ -202,13 +209,37 @@ public class AddLibroController implements Initializable {
 	 */
 	public void save(ActionEvent event) {
 		
+		
 		if(checkCampos()) {
 			Libro newLibro = getNewLibro();
 			
 			
+			
 
 			try {
-				manageCrud.create(newLibro);
+				
+				Libro buscarLibro = manageCrud.readLibro(newLibro.getIsbn());
+				if(buscarLibro == null) {
+					System.out.println("el libro no existe");
+					manageCrud.create(newLibro);
+					alerta("Nuevo libro creado",AlertType.INFORMATION);
+				}
+				else {
+					System.out.println("El libro existe hay que añadir +1 en copias");
+					buscarLibro.setCopias(buscarLibro.getCopias()+1);
+					
+					if(buscarLibro.getCopias()>buscarLibro.getPrestados()) {
+						buscarLibro.setDisponibilidad(true);
+					}
+					
+					manageCrud.update(buscarLibro);
+					
+					
+					alerta("Copia añadida",AlertType.INFORMATION);
+				}
+				
+				
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -232,8 +263,32 @@ public class AddLibroController implements Initializable {
 			Libro editLibro = getNewLibro();
 			
 			try {
-				System.out.println("Actualizando");
-				manageCrud.update(editLibro);
+				editLibro.setCopias(Integer.parseInt(textCopias.getText()));
+				editLibro.setPrestados(libro.getPrestados());
+				
+				if(editLibro.getCopias()<libro.getPrestados()) {
+					alerta("No puedes tener más copias que libros prestados",AlertType.ERROR);
+				}
+				else if(editLibro.getCopias()>libro.getPrestados() &&editLibro.getCopias()!=0) {
+					System.out.println("copias mayores");
+					System.out.println("El numero de copias " + editLibro.getCopias());
+					System.out.println("El numero de prestamos " + libro.getPrestados());
+					
+					editLibro.setDisponibilidad(true);
+					manageCrud.update(editLibro);
+					
+				}
+				else if(editLibro.getCopias()==libro.getPrestados() && editLibro.getCopias()!=0){
+					System.out.println("copias iguales");
+					editLibro.setDisponibilidad(false);
+					manageCrud.update(editLibro);
+					
+				}
+				else if(editLibro.getCopias()==0) {
+					alerta("El número de copias no puede ser 0",AlertType.ERROR);
+				}
+				
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
