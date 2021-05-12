@@ -66,6 +66,9 @@ public class LibroController implements Initializable{
     @FXML
     private TextField searchLibros;
     
+    @FXML
+    private TableColumn<Libro, String> columCopias;
+    
     public Crud manager;
 
 	@Override
@@ -107,6 +110,7 @@ public class LibroController implements Initializable{
 			columTitulo.setCellValueFactory(new PropertyValueFactory<Libro, String>("titulo"));
 			columAutor.setCellValueFactory(new PropertyValueFactory<Libro, String>("autores"));
 			columEditorial.setCellValueFactory(new PropertyValueFactory<Libro, String>("editorial"));
+			columCopias.setCellValueFactory(new PropertyValueFactory<Libro, String>("copias"));
 			
 			columDispo.setCellValueFactory(data -> {
 				boolean valor = data.getValue().getDisponibilidad();
@@ -120,6 +124,7 @@ public class LibroController implements Initializable{
 				
 				return new ReadOnlyStringWrapper(res);
 			});
+			
 			
 		
 			tablaLibros.setItems(listaLibros);
@@ -188,6 +193,7 @@ public class LibroController implements Initializable{
 		columTitulo.setCellValueFactory(new PropertyValueFactory<Libro, String>("titulo"));
 		columAutor.setCellValueFactory(new PropertyValueFactory<Libro, String>("autores"));
 		columEditorial.setCellValueFactory(new PropertyValueFactory<Libro, String>("editorial"));
+		
 		
 		//PropertyValueFactory valor = new PropertyValueFactory<Libro, String>("disponibilidad");
 		
@@ -264,8 +270,33 @@ public class LibroController implements Initializable{
 			Libro lib = (Libro) obtenerObjetoFoco();
 			if(lib != null) {
 				try {
-					manager.delete(lib);
-					alerta("¿Seguro que quieres borrar el usuario?", AlertType.CONFIRMATION);
+					//Antes de borrar un libro debe sercirarse que no este en prestamo.
+					Libro libroExisteComoPestado = manager.getLibroPrestado(lib.getIsbn());
+					
+					if( lib.getCopias()==1 && libroExisteComoPestado== null) {
+						manager.delete(lib);
+						
+					} 
+					else if(lib.getCopias()==lib.getPrestados()) {
+						//Lanzamos una excepción.
+						alerta("No puedes eliminar un libro en prestamo", AlertType.ERROR);
+					}
+					
+					else {
+						
+						lib.setCopias(lib.getCopias()-1);
+						
+						if(lib.getCopias()==lib.getPrestados()) {
+							lib.setDisponibilidad(false);
+						}
+						
+						manager.update(lib);
+						alerta("Copia eliminada", AlertType.INFORMATION);
+						
+					}
+					
+					
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
