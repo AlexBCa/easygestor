@@ -23,13 +23,15 @@ public class Libro implements Serializable {
 	private String editorial;
 	private String edicion;
 	private Boolean disponibilidad;
+	private int copias;
+	private int prestados;
 	
 	public Libro() {
 		
 	}
 
 	public Libro( int isbn, String titulo, String autores, String editorial, String edicion,
-			Boolean disponibilidad) {
+			Boolean disponibilidad, int copias) {
 		super();
 		
 		this.isbn = isbn;
@@ -38,6 +40,7 @@ public class Libro implements Serializable {
 		this.editorial = editorial;
 		this.edicion = edicion;
 		this.disponibilidad = disponibilidad;
+		this.copias = copias;
 	}
 
 
@@ -89,6 +92,23 @@ public class Libro implements Serializable {
 	public void setDisponibilidad(Boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
+
+	public int getCopias() {
+		return copias;
+	}
+
+	public void setCopias(int copias) {
+		this.copias = copias;
+	}
+
+	public int getPrestados() {
+		return prestados;
+	}
+
+	public void setPrestados(int prestados) {
+		this.prestados = prestados;
+	}
+	
 	
 	
 
