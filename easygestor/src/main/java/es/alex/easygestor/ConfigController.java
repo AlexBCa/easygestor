@@ -12,6 +12,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.scene.control.Alert.AlertType;
 import model.ConexionJson;
 import security.Aes256;
@@ -34,6 +37,10 @@ public class ConfigController implements Initializable{
     @FXML
     private PasswordField campoPassword;
     
+    @FXML
+    private Text mostrarConfigurado;
+
+    
     ConexionJson manageJson;
     
     SendEmail manageEmail;
@@ -48,6 +55,15 @@ public class ConfigController implements Initializable{
 		
 		manageJson = new ConexionJson();
 		manageEmail = new SendEmail();
+		
+		try {
+			if(manageJson.checkConfig()) {
+				mostrarConfigurado.setText("¡Configurado!");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		
 		
@@ -132,6 +148,8 @@ public class ConfigController implements Initializable{
 		
 		alerta.showAndWait();
 	}
+	
+	
 	
 	
 	
