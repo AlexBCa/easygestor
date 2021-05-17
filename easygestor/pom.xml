@@ -4,6 +4,9 @@
     <groupId>es.alex.easygestor</groupId>
     <artifactId>easygestor</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    
+    
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
@@ -69,19 +72,39 @@
     <version>1.4.7</version>
 </dependency>
 	
+
+      <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+        </dependency>
+
 	
 	
 		
 	
     </dependencies>
     <build>
+    
+    
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
+                
                 <configuration>
                     <release>11</release>
+                    <archive>
+              
+                    <manifest>
+                    
+            			<addClasspath>true</addClasspath>
+            
+			            <mainClass>es.alex.easygestor.SuperClass</mainClass>
+			          </manifest>
+                    </archive>
+                    
                 </configuration>
             </plugin>
             <plugin>
@@ -92,6 +115,32 @@
                     <mainClass>es.alex.easygestor.App</mainClass>
                 </configuration>
             </plugin>
+            
+            
+            <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>es.alex.easygestor.SuperClass</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    
         </plugins>
+        
+        
     </build>
+    
 </project>
