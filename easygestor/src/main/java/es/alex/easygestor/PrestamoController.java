@@ -112,7 +112,7 @@ public class PrestamoController implements Initializable {
 		
 		//System.out.println(manager.getPrestamoPorTitulos("refor").get(0).getIsbn());
 		searchTitulo.setPromptText("Buscar por título");
-		textIsbn.setPromptText("6 primeros digitos");
+		textIsbn.setPromptText("6 Últimos dígitos");
 		textNsocio.setPromptText("N socio");
 		
 		
@@ -394,7 +394,7 @@ public class PrestamoController implements Initializable {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			alerta("Ocurrio un error", AlertType.ERROR);
+			alerta("Debe rellenar los campos de correctamente.", AlertType.ERROR);
 			
 		}
 		
