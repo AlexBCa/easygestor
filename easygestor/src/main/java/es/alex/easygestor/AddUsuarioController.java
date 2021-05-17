@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.PersistenceException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -125,7 +127,7 @@ public class AddUsuarioController implements Initializable{
 				alerta("El DNI no tiene el formato correcto", AlertType.ERROR);
 				
 			}
-			else if(textTele.getText().length()>9){
+			else if(textTele.getText().length()<9 || textTele.getText().length()>14){
 				alerta("El numero de teléfono no valido", AlertType.ERROR);
 			}
 			else {
@@ -154,7 +156,14 @@ public class AddUsuarioController implements Initializable{
 
 			try {
 				manageCrud.create(newUser);
-			} catch (Exception e) {
+			
+			
+			}
+			
+			catch(PersistenceException p) {
+				alerta("DNI repetido",AlertType.ERROR);
+			}
+			catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				alerta("Ocurrio un error al crear el libro",AlertType.ERROR);
@@ -182,7 +191,12 @@ public class AddUsuarioController implements Initializable{
 			newUser.setNsocio(user.getNsocio());
 			try {
 				manageCrud.update(newUser);
-			} catch (Exception e) {
+			} catch(PersistenceException p) {
+				alerta("DNI repetido",AlertType.ERROR);
+			}
+			
+			
+			catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				alerta("Ocurrio un error al editar el libro",AlertType.ERROR);
@@ -268,6 +282,11 @@ public class AddUsuarioController implements Initializable{
 	    
 	}
 	
+	/**
+	 * Comprueba que el dni tenga un formato correcto.
+	 * @param dni
+	 * @return
+	 */
 	public boolean validarDni(String dni) {
 		//Copila las expresiones regular
 		// la expresión regular dicta que tenga que tener 8 numeros y una cadena.

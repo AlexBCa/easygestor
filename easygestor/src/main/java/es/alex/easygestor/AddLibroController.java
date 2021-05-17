@@ -104,6 +104,7 @@ public class AddLibroController implements Initializable {
 			newLibro.setEdicion(textEdicion.getText());
 			newLibro.setIsbn(Integer.parseInt(textIsbn.getText()));
 			newLibro.setDisponibilidad(true);
+			newLibro.setCopias(Integer.parseInt(textCopias.getText()));
 
 			
 		}
@@ -147,7 +148,9 @@ public class AddLibroController implements Initializable {
 			}else if(textIsbn.getText().length()>6) {
 				alerta("Escribe solo los 6 primeros números", AlertType.ERROR);
 			}
-			
+			else if(Integer.parseInt(textCopias.getText())<=0) {
+				alerta("El campo copias no puede ser 0 o un número negativo", AlertType.ERROR);
+			}
 			else {
 				valido = true;
 				
@@ -226,7 +229,7 @@ public class AddLibroController implements Initializable {
 				}
 				else {
 					System.out.println("El libro existe hay que añadir +1 en copias");
-					buscarLibro.setCopias(buscarLibro.getCopias()+1);
+					buscarLibro.setCopias(buscarLibro.getCopias()+ newLibro.getCopias());
 					
 					if(buscarLibro.getCopias()>buscarLibro.getPrestados()) {
 						buscarLibro.setDisponibilidad(true);
