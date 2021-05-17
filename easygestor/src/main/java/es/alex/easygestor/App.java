@@ -30,6 +30,7 @@ public class App extends Application {
         
         // Importantisimo la ruta no puede empezar por /
         stage.getIcons().add(new Image(App.class.getResourceAsStream("image/ico.png")));
+        stage.setTitle("EaesyGestor");
         
         
         stage.setScene(scene);
