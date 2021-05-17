@@ -10,8 +10,8 @@
          <children>
             <Button mnemonicParsing="false" onMouseClicked="#panelUsuario" prefHeight="105.0" prefWidth="130.0" text="Usuario" />
             <Button mnemonicParsing="false" onMouseClicked="#panelBiblioteca" prefHeight="105.0" prefWidth="130.0" text="Biblioteca" />
-            <Button mnemonicParsing="false" onMouseClicked="#panelPrestamo" prefHeight="105.0" prefWidth="130.0" text="Prestamo" />
-            <Button mnemonicParsing="false" onMouseClicked="#panelConfig" prefHeight="105.0" prefWidth="130.0" text="Configuración" />
+            <Button mnemonicParsing="false" onMouseClicked="#panelPrestamo" prefHeight="105.0" prefWidth="130.0" text="Préstamo" />
+            <Button mnemonicParsing="false" onMouseClicked="#panelConfig" prefHeight="105.0" prefWidth="130.0" style="-fx-font-size: 16;" text="Opciones" />
          </children>
       </VBox>
    </left>
