@@ -27,6 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
@@ -247,6 +248,8 @@ public class LibroController implements Initializable{
 			stage.setTitle("Añadir libro");
 			stage.setResizable(false);
 			Parent root = loader.load();
+			// Importantisimo la ruta no puede empezar por /
+	        stage.getIcons().add(new Image(App.class.getResourceAsStream("image/ico.png")));
 			stage.setScene(new Scene(root));
 			stage.show();
 			
@@ -273,12 +276,14 @@ public class LibroController implements Initializable{
 					//Antes de borrar un libro debe sercirarse que no este en prestamo.
 					Libro libroExisteComoPestado = manager.getLibroPrestado(lib.getIsbn());
 					
+					
 					if( lib.getCopias()==1 && libroExisteComoPestado== null) {
 						manager.delete(lib);
 						
 					} 
 					else if(lib.getCopias()==lib.getPrestados()) {
 						//Lanzamos una excepción.
+						
 						alerta("No puedes eliminar un libro en prestamo", AlertType.ERROR);
 					}
 					
@@ -323,6 +328,8 @@ public class LibroController implements Initializable{
 				stage.setTitle("Editar libro");
 				Parent root = loader.load();
 				stage.setResizable(false);
+				// Importantisimo la ruta no puede empezar por /
+		        stage.getIcons().add(new Image(App.class.getResourceAsStream("image/ico.png")));
 				stage.setScene(new Scene(root));
 				// Añadimos la fila seleccionada al controlador para poder editarlo
 				((AddLibroController) loader.getController()).initData(tablaLibros.getSelectionModel().getSelectedItem());
