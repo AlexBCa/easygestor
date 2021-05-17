@@ -3,13 +3,16 @@ package model;
 import model.Usuario;
 
 import java.sql.Date;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
+import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -47,7 +50,7 @@ public class Crud {
      * @param obj. Se envia un objecto que representa una tabla.
      * @throws ConstraintViolationException
      */
-    public int create(Object obj) throws Exception{
+    public int create(Object obj) throws Exception, PersistenceException{
     	int id = 0;
     	Session session = null;
     	
@@ -149,7 +152,7 @@ public class Crud {
      * Actualiza los datos del objecto pasado.
      * @param obj
      */
-    public void update(Object obj) throws Exception{
+    public void update(Object obj) throws Exception, HibernateException, PersistenceException{
     	
     	Session session = null;
     	
@@ -171,7 +174,7 @@ public class Crud {
      * Borra un registro en la base de datos.
      * @param obj. El objecto que queremos borrar.
      */
-    public void delete(Object obj) throws Exception{
+    public void delete(Object obj) throws Exception, HibernateException, PersistenceException{
     	Session session = null;
     	
 
@@ -368,6 +371,12 @@ public class Crud {
     	return prestamos;
     }
     
+    /**
+     * Devuelve el número de libros prestados que tiene un usuario.
+     * @param nsocio
+     * @return
+     */
+    
     public long contarPrestamos(int nsocio) {
     	Session session = null;
     	
@@ -386,6 +395,11 @@ public class Crud {
     	
     }
     
+    /**
+     * Consigue el libro prestado filtrando por ISBN.
+     * @param isbn
+     * @return
+     */
     public Libro getLibroPrestado(int isbn) {
     	Session session = null;
     	Libro lb = null;
@@ -416,6 +430,11 @@ public class Crud {
     	
     }
     
+    /**
+     * Devuleve una lista con los prestamos filtrados por titulos.
+     * @param titulo
+     * @return
+     */
     public List<Prestamo> getPrestamoPorTitulos(String titulo) {
     	
     	
@@ -432,6 +451,11 @@ public class Crud {
     	
     	return prestamos;
     }
+    
+    /**
+     * Devuelve todo los prestamos pasados de fecha pero no multados todavia.
+     * @return
+     */
     
     public List<Prestamo> getPrestamosSinMultar() {
     	Session session = null;
@@ -460,6 +484,10 @@ public class Crud {
         return prestamos;     
     }
     
+    /**
+     * Devuelve todo los prestamos que tienen una multa.
+     * @return
+     */
     
     public List<Prestamo> getPrestamosMultados() {
     	Session session = null;
@@ -488,7 +516,11 @@ public class Crud {
         return prestamos;     
     }
     
-    
+    /**
+     * Devuelve el numero de multas que tiene un usuario.
+     * @param nsocio
+     * @return
+     */
     public long comprobrarMultaUsuario(int nsocio) {
     	Session session = null;
     	
