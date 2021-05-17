@@ -29,7 +29,7 @@ public class SendEmail {
 	//private  String SMTP_PASSWORD = "Kuro.Neko.32";
 	private  String SMTP_PASSWORD;
 	static final String HOST = "smtp.gmail.com";
-	static final String SUBJECT = "Plazo de prestamo terminado.";
+	static final String SUBJECT = "Plazo de préstamo terminado.";
 	static final int PORT = 587;
 	
 	private String TO = "estaneurona@gmail.com";
@@ -37,12 +37,13 @@ public class SendEmail {
 	
 	static final String BODY = String.join(
     	    System.getProperty("line.separator"),
-    	    "<h1>Plazo de entrega sobrepasado</h1>",
-    	    "<p>Estimado cliente se le informa que el plazo de prestamo ", 
-    	    "a expirado, por favor, realice la devolución cuento antes.   ",
-    	    "Puede que se apliquen cargos extras dependiendo del tiempo de retraso.   ",
-    	    "<a href='https://github.com/javaee/javamail'>Javamail Package</a>",
-    	    " for <a href='https://www.java.com'>Java</a>."
+    	    "<h1 style=\"text-align: center;\"><span style=\"color: #ff0000;\">&iexcl;Plazo de entrega",
+    	    "sobrepasado!</span></h1>", 
+    	    "<h3><span style=\"color: #000000;\">El plazo de entrega de su libro ha sido sobrepasado, se le",
+    	    "ruega que realice la entrega cuento antes. Una mayor demora en la entrega puede suponer",
+    	    "cargos adicionales.</span></h3>",
+    	    "<hr />",
+    	    "<p>Este es un correo automatico, no intente contestar a este mensaje.&nbsp;</p>"
     	);
 	
 	public SendEmail() {
@@ -71,10 +72,10 @@ public class SendEmail {
         msg.setContent(BODY,"text/html");
     	
         
-     // Create a transport.
+     
         Transport transport = session.getTransport("smtp");
         
-     // Connect to Amazon SES using the SMTP username and password you specified above.
+    
         transport.connect(HOST, SMTP_USERNAME, SMTP_PASSWORD);
         
         transport.sendMessage(msg, msg.getAllRecipients());
