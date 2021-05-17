@@ -26,7 +26,7 @@ import model.Crud;
 import model.Usuario;
 import org.apache.commons.validator.routines.EmailValidator;
 
-public class AddUsuarioController implements Initializable{
+public class AddUsuarioController extends PanelPadre implements Initializable{
 	
     @FXML
     private TextField textName;
@@ -261,16 +261,7 @@ public class AddUsuarioController implements Initializable{
 		
 	}
 	
-	/**
-	 * Lanza una alerta al usuario.
-	 * @param nombre
-	 * @param alert
-	 */
-	public void alerta(String nombre, Alert.AlertType alert) {
-		Alert alerta = new Alert(alert, nombre);
-		
-		alerta.showAndWait();
-	}
+
 	
 	/**
 	 * Cierra una ventana.

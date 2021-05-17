@@ -30,7 +30,7 @@ import model.Usuario;
  *
  */
 
-public class PrimaryController implements Initializable {
+public class PrimaryController extends PanelPadre implements Initializable {
 	
     @FXML
     private BorderPane panelPrincipal;
@@ -133,16 +133,7 @@ public class PrimaryController implements Initializable {
 	}
 	
 	
-	/**
-	 * Lanza una alerta al usuario.
-	 * @param nombre. Texto de la alerta.
-	 * @param alert. Tipo de la alerta.
-	 */
-	public void alerta(String nombre, Alert.AlertType alert) {
-		Alert alerta = new Alert(alert, nombre);
-		
-		alerta.showAndWait();
-	}
+
 	
 
 	

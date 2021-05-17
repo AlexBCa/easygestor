@@ -8,16 +8,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import model.Crud;
 import model.Libro;
 import model.Usuario;
 
-public class AddLibroController implements Initializable {
+public class AddLibroController extends PanelPadre implements Initializable {
 	
     @FXML
     private TextField textTitulo;
@@ -123,11 +126,6 @@ public class AddLibroController implements Initializable {
 	 * @param nombre
 	 * @param alert
 	 */
-	public void alerta(String nombre, Alert.AlertType alert) {
-		Alert alerta = new Alert(alert, nombre);
-		
-		alerta.showAndWait();
-	}
 	
 	
 	/**

@@ -28,7 +28,7 @@ import javafx.scene.control.Alert.AlertType;
 import model.ConexionJson;
 import security.Aes256;
 
-public class ConfigController implements Initializable{
+public class ConfigController extends PanelPadre implements Initializable{
 	
 	@FXML
     private TextField campoEmail;
@@ -148,16 +148,7 @@ public class ConfigController implements Initializable{
 		return valido;
 	}
 	
-	/**
-	 * Lanza una alerta al usuario.
-	 * @param nombre. Texto de la alerta.
-	 * @param alert. Tipo de la alerta.
-	 */
-	public void alerta(String nombre, Alert.AlertType alert) {
-		Alert alerta = new Alert(alert, nombre);
-		
-		alerta.showAndWait();
-	}
+
 	
 	/**
 	 * identifica si el correo es un gmail.

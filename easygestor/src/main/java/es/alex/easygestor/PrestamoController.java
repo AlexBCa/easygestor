@@ -33,7 +33,7 @@ import model.Prestamo;
 import model.Usuario;
 import model.Prestamo;
 
-public class PrestamoController implements Initializable {
+public class PrestamoController extends PanelPadre implements Initializable {
 	
     @FXML
     private TextField textIsbn;
@@ -181,17 +181,7 @@ public class PrestamoController implements Initializable {
 			tablaPrestamos.setItems(listaPrestamos);
 			
 		}
-	
-	/**
-	 * Lanza una alerta al usuario.
-	 * @param nombre. Texto de la alerta.
-	 * @param alert. Tipo de la alerta.
-	 */
-	public void alerta(String nombre, Alert.AlertType alert) {
-		Alert alerta = new Alert(alert, nombre);
-		
-		alerta.showAndWait();
-	}
+
 	
 	/**
 	 * Detecta cuando se hace clic en uno de los elementos de la lista y lanza un evento que activa los botones edita y borrar.

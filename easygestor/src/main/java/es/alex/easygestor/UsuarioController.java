@@ -199,17 +199,7 @@ public class UsuarioController extends PanelPadre implements Initializable {
 			
 		}
 	
-	/**
-	 * Lanza una alerta al usuario.
-	 * @param nombre. Texto de la alerta.
-	 * @param alert. Tipo de la alerta.
-	 */
-	public void alerta(String nombre, Alert.AlertType alert) {
-		Alert alerta = new Alert(alert, nombre);
-		
-		alerta.showAndWait();
-	}
-	
+
 	/**
 	 * Devuelve el objeto usuairo selecionado en la lista.
 	 * @return
@@ -403,6 +393,7 @@ public class UsuarioController extends PanelPadre implements Initializable {
 						setUserAndPassToEmail();
 						
 						managerEmail.send();
+						alerta("Email enviado al usuario  " + usuarioMultar.getNombre() + " " +usuarioMultar.getApellidos(),  AlertType.INFORMATION);
 						
 						manager.update(prestamoMultar);
 					}

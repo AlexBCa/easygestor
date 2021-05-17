@@ -35,7 +35,7 @@ import model.Crud;
 import model.Libro;
 import model.Usuario;
 
-public class LibroController implements Initializable{
+public class LibroController  extends PanelPadre implements Initializable{
 	
 	@FXML
     private TableView<Libro> tablaLibros;
@@ -167,16 +167,7 @@ public class LibroController implements Initializable{
 		});
 	}
 	
-	/**
-	 * Lanza una alerta al usuario.
-	 * @param nombre. Texto de la alerta.
-	 * @param alert. Tipo de la alerta.
-	 */
-	public void alerta(String nombre, Alert.AlertType alert) {
-		Alert alerta = new Alert(alert, nombre);
-		
-		alerta.showAndWait();
-	}
+
 	
 	/**
 	 * Actualiza la tabla con los usuarios que coincidan con el texto.
