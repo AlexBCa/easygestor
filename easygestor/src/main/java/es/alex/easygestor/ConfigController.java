@@ -12,6 +12,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
 import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
 
 import javafx.event.ActionEvent;
@@ -65,6 +67,7 @@ public class ConfigController implements Initializable{
 			e.printStackTrace();
 		}
 
+		
 		
 		
 		//configurar json
@@ -123,7 +126,14 @@ public class ConfigController implements Initializable{
 				valido = false;
 				throw new Exception();
 				
-			}else {
+			}
+			else if(!(EmailValidator.getInstance().isValid(campoEmail.getText()))) {
+				alerta("Formato de Email no valido", AlertType.ERROR);
+			}
+			else if(!(isGmail())) {
+				alerta("El correo debe ser un Gmail", AlertType.ERROR);
+			}
+			else {
 				valido = true;
 				
 			}
@@ -148,6 +158,26 @@ public class ConfigController implements Initializable{
 		
 		alerta.showAndWait();
 	}
+	
+	/**
+	 * identifica si el correo es un gmail.
+	 * @return
+	 */
+	public boolean isGmail() {
+		String email = campoEmail.getText();
+		email = "hola@gmail.com";
+		String idenfyEmail = email.split("@")[1];
+		
+		if(idenfyEmail.contentEquals("gmail.com")  || idenfyEmail.contentEquals("gmail.es")) {
+			
+			return true;
+		}
+		System.out.println(idenfyEmail);
+		return false;
+		
+	}
+	
+	
 	
 	
 	
