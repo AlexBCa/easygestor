@@ -7,6 +7,8 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -15,6 +17,10 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.mail.MessagingException;
+import javax.persistence.PersistenceException;
+
+import org.hibernate.HibernateException;
+import org.hibernate.exception.ConstraintViolationException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -35,6 +41,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.ConexionJson;
@@ -230,8 +237,10 @@ public class UsuarioController extends PanelPadre implements Initializable {
 			FXMLLoader loader = new FXMLLoader(App.class.getResource("ui_usuario_add.fxml"));
 			Stage stage = new Stage();
 			stage.setResizable(false);
-			stage.setTitle("Añadir registro");
+			stage.setTitle("Añadir Usuario");
 			Parent root = loader.load();
+			// Importantisimo la ruta no puede empezar por /
+	        stage.getIcons().add(new Image(App.class.getResourceAsStream("image/ico.png")));
 			stage.setScene(new Scene(root));
 			stage.show();
 			
@@ -262,9 +271,10 @@ public class UsuarioController extends PanelPadre implements Initializable {
 				FXMLLoader loader = new FXMLLoader(App.class.getResource("ui_usuario_add.fxml"), resources);
 				Stage stage = new Stage();
 				stage.setResizable(false);
-				stage.setTitle("Editar registro");
+				stage.setTitle("Editar usuario");
 				Parent root = loader.load();
-				
+				// Importantisimo la ruta no puede empezar por /
+		        stage.getIcons().add(new Image(App.class.getResourceAsStream("image/ico.png")));
 				
 				stage.setScene(new Scene(root));
 				
@@ -286,18 +296,24 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		});
 	}
 	
-	public void botonDel(ActionEvent event) {
+	public void botonDel(ActionEvent event) throws HibernateException {
 		
 		
 		Usuario user = (Usuario) obtenerObjetoFoco();
 		if(user != null) {
 			try {
+				
 				manager.delete(user);
 				alerta("Usuario borrado", AlertType.INFORMATION);
-			} catch (Exception e) {
+			} catch (PersistenceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				alerta("Error al borrar usuario.", AlertType.ERROR);
+				alerta("No puedes borrar un usuario que tiene un prestamo", AlertType.ERROR);
+				
+			}
+			catch(Exception e1) {
+				alerta("Error desconocido al borrar usuario.", AlertType.ERROR);
+				e1.printStackTrace();
 			}
 		}
 		
@@ -376,7 +392,6 @@ public class UsuarioController extends PanelPadre implements Initializable {
 			ConexionJson json = new ConexionJson();
 			if(json.checkConfig()&& json.compareFechas()) {
 				
-				
 				List<Prestamo> getPrestamos = manager.getPrestamosSinMultar();
 				if(!(getPrestamos.isEmpty())) {
 					for(Prestamo prestamoMultar: getPrestamos ) {
@@ -384,19 +399,14 @@ public class UsuarioController extends PanelPadre implements Initializable {
 						Usuario usuarioMultar = manager.readUsuario(prestamoMultar.getNsocio());
 						prestamoMultar.setMultado(true);
 						managerEmail.setTO(usuarioMultar.getEmail());
-						
-
+			
 						setUserAndPassToEmail();
 						
 						managerEmail.send();
 						
 						manager.update(prestamoMultar);
-						
-						
 					}
 				}
-				
-				
 				
 			}
 			// Cambiamos la fecha por la actual para denotar que hoy ay se hizo la busqueda.
@@ -432,13 +442,10 @@ public class UsuarioController extends PanelPadre implements Initializable {
 		String[] userAndPass = json.getUserAndPassFromJson();
 		int index = userAndPass[0].indexOf("@");
 		String userName = userAndPass[0].substring(0, index);
-		//managerEmail.setFROM(userAndPass[0]);
+
 		managerEmail.setFROM(userAndPass[0]);
-		//managerEmail.setSMTP_PASSWORD(userAndPass[1]);
+
 		managerEmail.setSMTP_PASSWORD(userAndPass[1]);
-		System.out.println(userAndPass[0]);
-		System.out.println(userAndPass[1]);
-		System.out.println(userName);
 		
 		managerEmail.setFROMNAME(userName);
 		managerEmail.setSMTP_USERNAME(userName);
