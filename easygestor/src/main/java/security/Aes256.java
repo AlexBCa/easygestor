@@ -32,7 +32,7 @@ public class Aes256 {
 	
 	
 	/**
-	 * Convierte la contraseña interna en la clave secreta para la AES2256
+	 * Convierte la contraseña interna en la clave secreta para la AES256
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 * @throws NoSuchAlgorithmException
