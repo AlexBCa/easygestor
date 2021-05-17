@@ -1,0 +1,57 @@
+/* 
+    Created on : 
+    Author     : Alex
+*/
+
+* {
+    -fx-primary : #2A2E37;
+    -fx-secondary : #FFFF8D;
+    -fx-primarytext : #B2B2B2;
+    -fx-blue: #1976D2;
+    -fx-red: #FF0000;
+    -fx-color-1:#1976D2;
+}
+
+
+
+
+/*Alert Dialog*/
+
+.myDialog{
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: white;
+}
+.myDialog > *.button-bar > *.container{
+    -fx-background-color: -fx-primary;
+}
+.myDialog > *.label.content{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+   
+    -fx-text-fill: #FCBA12;
+}
+.myDialog:header *.header-panel{
+    -fx-background-color: -fx-blue;
+}
+.myDialog:header  .header-panel .label {
+    -fx-font-style: normal;
+    -fx-text-fill: white;
+    
+}
+.myDialog:header *.header-panel *.label{
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: -fx-primary;
+}
+.myDialog .text{
+	-fx-text-fill: -fx-primary;
+}
+
+.text{
+	-fx-text-fill: #FCBA12;
+}
+
+.label{
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 10pt; 
+}
