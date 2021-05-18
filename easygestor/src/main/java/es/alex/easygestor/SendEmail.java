@@ -24,9 +24,9 @@ public class SendEmail {
 	
 	private String from;
 	private  String fromName;
-	//private  String SMTP_USERNAME = "anajr991";
+	
 	private  String SMTP_USERNAME;
-	//private  String SMTP_PASSWORD = "Kuro.Neko.32";
+	
 	private  String SMTP_PASSWORD;
 	static final String HOST = "smtp.gmail.com";
 	static final String SUBJECT = "Plazo de préstamo terminado.";
